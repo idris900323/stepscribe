@@ -11,6 +11,7 @@ import re
 import shutil
 import subprocess
 import sys
+import sysconfig
 import zipfile
 from pathlib import Path
 from typing import Any
@@ -250,7 +251,7 @@ def test_mcp_config_launches_the_server() -> None:
 
     cfg = json.loads((PLUGIN / ".mcp.json").read_text(encoding="utf-8"))
     server = cfg["mcpServers"]["stepscribe"]
-    scripts = str(Path(sys.executable).parent)
+    scripts = os.pathsep.join([str(Path(sys.executable).parent), sysconfig.get_path("scripts")])
     env = {"PATH": scripts + os.pathsep + os.environ.get("PATH", ""), "STEPSCRIBE_HEADLESS": ""}
     # the config says "stepscribe"; resolve it in this environment's scripts folder
     command = shutil.which(server["command"], path=scripts)

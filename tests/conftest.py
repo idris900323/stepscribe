@@ -82,7 +82,18 @@ def golden(request: pytest.FixtureRequest):  # type: ignore[no-untyped-def]
     return check
 
 
-RENDER_TESTS = {"test_render.py", "test_no_clipping.py"}
+RENDER_FILES = {
+    "test_render.py",
+    "test_no_clipping.py",
+    "test_export.py",
+    "test_understanding_pack.py",
+}
+RENDER_TESTS = {
+    "test_image_tools_return_small_pngs_and_panel_text",
+    "test_section_and_render_return_png",
+    "test_page_and_upload_flow",
+    "test_interview_over_http",
+}
 
 
 def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
@@ -93,5 +104,5 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item
         return
     skip = pytest.mark.skip(reason="off-screen rendering is not available on this machine")
     for item in items:
-        if Path(str(item.fspath)).name in RENDER_TESTS:
+        if Path(str(item.fspath)).name in RENDER_FILES or item.name in RENDER_TESTS:
             item.add_marker(skip)
