@@ -4,7 +4,10 @@
 
 from __future__ import annotations
 
+import subprocess
+import sys
 from dataclasses import dataclass
+from functools import cache
 
 import numpy as np
 import vtk
@@ -127,6 +130,34 @@ def _edge_actor(item: SceneItem) -> vtk.vtkActor | None:
     return actor
 
 
+class RenderUnavailable(RuntimeError):
+    """This machine cannot render images (no usable OpenGL, for example a bare virtual machine)."""
+
+
+def _smoke() -> None:
+    """Render one empty frame; run in a child process because a broken driver crashes the process."""
+    win = vtk.vtkRenderWindow()
+    win.SetOffScreenRendering(1)
+    win.SetSize(8, 8)
+    win.AddRenderer(vtk.vtkRenderer())
+    win.Render()
+    win.Finalize()
+
+
+@cache
+def rendering_available() -> bool:
+    """True when VTK can draw off-screen here; checked once per process in a child process."""
+    try:
+        done = subprocess.run(
+            [sys.executable, "-c", "from stepscribe.render.raster import _smoke; _smoke()"],
+            capture_output=True,
+            timeout=120,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return done.returncode == 0
+
+
 def render_scene(
     items: list[SceneItem],
     camera: CameraSpec,
@@ -134,6 +165,8 @@ def render_scene(
     highlight: set[str] | None = None,
 ) -> Rendered:
     """Render *items* with an orthographic camera; deterministic (fixed lights, no multisampling)."""
+    if not rendering_available():
+        raise RenderUnavailable("off-screen rendering does not work on this machine")
     w, h = size
     vtk.vtkMapper.SetResolveCoincidentTopologyToPolygonOffset()
     ren = vtk.vtkRenderer()

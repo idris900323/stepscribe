@@ -34,7 +34,7 @@ from stepscribe.render.kinematics_view import (
     recolor_by_link,
 )
 from stepscribe.render.overlay import Label, draw_labels, save_png
-from stepscribe.render.raster import Rendered, render_scene
+from stepscribe.render.raster import Rendered, render_scene, rendering_available
 from stepscribe.render.scene import (
     CameraSpec,
     SceneItem,
@@ -295,6 +295,8 @@ def render_pack_images(
 ) -> list[str]:
     """Write the assembly image set and part images into *folder*; returns assembly image paths."""
     report = analysis.report
+    if not rendering_available():
+        return []  # no usable OpenGL: the pack is written without images
     _clock["t"] = time.time()
     if tracker is not None:
         tracker.stage("render", "rendering labelled images")

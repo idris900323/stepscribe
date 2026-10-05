@@ -80,3 +80,18 @@ def golden(request: pytest.FixtureRequest):  # type: ignore[no-untyped-def]
         )
 
     return check
+
+
+RENDER_TESTS = {"test_render.py", "test_no_clipping.py"}
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+    """Skip the image tests on machines where off-screen OpenGL does not work (bare CI VMs)."""
+    from stepscribe.render.raster import rendering_available
+
+    if rendering_available():
+        return
+    skip = pytest.mark.skip(reason="off-screen rendering is not available on this machine")
+    for item in items:
+        if Path(str(item.fspath)).name in RENDER_TESTS:
+            item.add_marker(skip)
