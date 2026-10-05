@@ -1,7 +1,7 @@
 {
   "name": "stepscribe",
   "displayName": "stepscribe",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Understand STEP CAD files of mechanical designs and robots: measured facts, how they move, weak spots, and portable Markdown exports. Runs offline.",
   "author": {
     "name": "idris sadiq"

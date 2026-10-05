@@ -186,3 +186,11 @@ def test_export_pack_for_a_path_and_unknown_job(step_files, monkeypatch, tmp_pat
         tools.export_pack("no-such-thing")
     with pytest.raises(ValueError, match="unknown job"):
         tools.get_job_status("deadbeef")
+
+
+def test_export_pack_can_save_a_copy_next_to_the_file(step_files, monkeypatch, tmp_path) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.setenv("STEPSCRIBE_CACHE", str(tmp_path / "cache"))
+    dest = tmp_path / "mine"
+    text = tools.export_pack(str(step_files["plate_4xM3"]), copy_to=str(dest))
+    assert "Saved a copy in:" in text
+    assert any(dest.glob("*_stepscribe/*_FULL.md")) and any(dest.glob("*.zip"))

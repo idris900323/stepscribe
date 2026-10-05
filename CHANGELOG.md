@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.1
+
+- README starts with a step-by-step "Start here" (install, the browser page, the Claude Code commands and in what order, where the files end up).
+- `/stepscribe:export` saves the export and zip next to the STEP file (new `copy_to` argument of the `export_pack` tool) and reports the full path.
+- Image rendering is skipped, instead of crashing, on machines without usable OpenGL.
+
+## 0.1.0
 
 First release.
 

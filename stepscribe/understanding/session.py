@@ -206,7 +206,10 @@ def _locked(path: Path, timeout_s: float = 15.0) -> Iterator[None]:
             fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
             os.close(fd)
             break
-        except FileExistsError:
+        except (
+            FileExistsError,
+            PermissionError,
+        ):  # Windows: PermissionError while the file is deleted
             try:  # a writer that died leaves its lock behind
                 if time.time() - lock.stat().st_mtime > 60:
                     lock.unlink(missing_ok=True)
@@ -284,5 +287,12 @@ def save_answers(
                     out.append("    " + dumped.strip().strip("{}").strip())
         tmp = p.with_name(f"{p.name}.{os.getpid()}.tmp")
         tmp.write_text("\n".join(out).rstrip("\n") + "\n", encoding="utf-8", newline="\n")
-        os.replace(tmp, p)
+        for attempt in range(50):  # Windows refuses while a reader has the file open
+            try:
+                os.replace(tmp, p)
+                break
+            except PermissionError:
+                if attempt == 49:
+                    raise
+                time.sleep(0.02)
     return len(mine)

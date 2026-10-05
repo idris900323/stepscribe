@@ -2,7 +2,7 @@
 # Copyright (C) 2026 idris sadiq
 """stepscribe: turn STEP files into an LLM Context Pack."""
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = ["__version__", "analyze", "build_context_pack", "export"]
 

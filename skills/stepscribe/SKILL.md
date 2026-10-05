@@ -40,7 +40,7 @@ a short progress line each time. Do not claim results before the job is done.
 
 ## 4. Export, then read
 
-Call `export_pack` with the job id. Read `MANIFEST.md`, then `<name>_SMALL.md` (or COMPACT or FULL if your
+Call `export_pack` with the job id and `copy_to` set to the folder of the STEP file, so the result sits next to it. Read `MANIFEST.md`, then `<name>_SMALL.md` (or COMPACT or FULL if your
 context allows). If you can see images, look at the assembly iso and exploded views. The layout of the files
 is in `references/pack_format.md`.
 

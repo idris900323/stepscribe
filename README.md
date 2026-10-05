@@ -2,17 +2,38 @@
 
 Give any LLM X-ray vision into your CAD model. `stepscribe` reads a STEP file and writes an **LLM context pack**: exact measurements, holes, patterns, standard parts, assembly relationships and labelled images, all computed deterministically and offline (no AI model, no network).
 
-## Install
+## Start here
+
+You need **Python 3.11 or newer**. Check with `python --version`; get it from python.org if it is missing.
+
+**1. Install (one command, covers everything below):**
 
 ```bash
-python -m pip install stepscribe-cad
+python -m pip install "stepscribe-cad[mcp]"
 ```
 
-From a checkout: `python -m pip install -e ".[dev,mcp]"`. Needs Python 3.11+ (3.12 recommended). The OpenCASCADE bindings come from `cadquery-ocp`. The command is `stepscribe`.
+Then check it with `stepscribe --help`. If your shell says the command is not found, close and reopen the terminal (pip puts it in your Python `Scripts` folder).
 
-## Quickstart
+**2. Pick how you want to use it:**
+
+| I want to... | Do this |
+|---|---|
+| **Click, not type** (easiest) | Run `stepscribe ui`. A page opens in your browser at http://127.0.0.1:8765: drop a STEP file on it, watch the progress and time estimate, read the results in tabs, answer the designer questions, download a zip. Only your own computer can reach it. |
+| Use it inside **Claude Code** | Install the plugin (see below), then type `/stepscribe:export my_robot.step`. |
+| Get files for **any AI chat** (ChatGPT, Gemini, Claude.ai...) | Run `stepscribe export my_robot.step`, then paste the `_FULL.md`, `_COMPACT.md` or `_SMALL.md` file into the chat, or upload the `chat_bundle` folder. |
+| Script it | `stepscribe pack`, `analyze`, `render`, `section` (see Quickstart). |
+
+**Things worth knowing**
+
+- Chat apps cannot take a STEP file as an attachment here. In Claude Code you give the **path**: start Claude Code in the folder that holds the file and type `/stepscribe:export my_robot.step`, or paste the full path.
+- The result is **files on your disk**. The plugin saves them next to your STEP file in `my_robot_stepscribe/` plus a `.zip`, and tells you the full path. Open that folder in your file manager and attach the file you need to your chat. `stepscribe export` writes to `./out` unless you pass `-o`.
+- Big assemblies take minutes. The page and the plugin show progress and an estimate; nothing is cut to go faster.
+- Everything runs on your computer: no AI model, no network, no upload.
+
+## Quickstart (command line)
 
 ```bash
+stepscribe ui                                      # the browser page (see "Standalone web page" below)
 stepscribe export robot.step -o out                # portable files for any AI: FULL, COMPACT, SMALL, chat bundle, zip
 stepscribe pack robot.step -o out --material alu   # the multi-file context pack
 stepscribe pack robots_folder/ -o out --jobs 4     # a whole folder, with index.md
@@ -22,7 +43,7 @@ stepscribe section robot.step --plane "z=12.5"
 stepscribe init-context                            # template for design intent / materials
 ```
 
-Large files can take minutes. Progress shows an estimated time remaining that improves as parts finish; analysis quality is never reduced to go faster.
+From a source checkout instead: `python -m pip install -e ".[dev,mcp]"`.
 
 ## Use with AI tools
 
@@ -47,12 +68,22 @@ Paste a Markdown file into the chat, or upload `chat_bundle/`. `MANIFEST.md` lis
 
 ### 2. Claude Code plugin
 
+First install the package (the plugin starts it; it does not install it): `python -m pip install "stepscribe-cad[mcp]"`. Then, in Claude Code:
+
 ```text
 /plugin marketplace add idris900323/stepscribe
 /plugin install stepscribe@stepscribe
 ```
 
-Adds the skill, the MCP server, a `mechanical-reviewer` agent and three commands: `/stepscribe:export <file>`, `/stepscribe:interview <file>` and `/stepscribe:review <file>`. Everything happens in the chat: progress updates for long runs, the designer interview one question at a time, images inline, results as files. The plugin starts `stepscribe mcp`, so install the package first (`pip install "stepscribe-cad[mcp]"`); to run it without a prior install, change `plugins/stepscribe/.mcp.json` to `uvx --from "stepscribe-cad[mcp]" stepscribe mcp`.
+Restart Claude Code if the commands do not show up; typing `/stepscribe` lists them. Start Claude Code in the folder that holds your STEP file, then:
+
+| Command | What it does |
+|---|---|
+| `/stepscribe:export my_robot.step` | Analyses the file, shows progress, saves the export next to it (`my_robot_stepscribe/` and a zip) and says which file to use where. Start here. |
+| `/stepscribe:interview my_robot.step` | Asks the designer questions one at a time (answer, "skip", "not sure", "back", "done") and rebuilds the export with your answers. |
+| `/stepscribe:review my_robot.step` | A design review: summary, critical issues, important, minor, questions, what is done well, citing part IDs. |
+
+The commands are independent. A good order is `export`, then `interview`, then `export` again, and `review` whenever you want the critique. You can also just ask in plain English ("what is weak in my_robot.step?"). To run the server without a prior install, change `plugins/stepscribe/.mcp.json` to `uvx --from "stepscribe-cad[mcp]" stepscribe mcp`.
 
 ### 3. Agent Skill
 
@@ -134,7 +165,10 @@ Answers apply in well under a second (the STEP file is not read again) and are s
 ```bash
 stepscribe ui                  # local page: upload, progress with ETA, tabs, image viewer, interview, zip
 stepscribe ui robot.step       # same, with a file preloaded
+stepscribe ui --port 9000      # another port if 8765 is taken (--no-browser to not open a tab)
 ```
+
+The page opens in your browser (at http://127.0.0.1:8765 by default). Drop a STEP file on it or type a path, press Analyse, and watch the progress bar with its time estimate. Tabs hold the context pack, understanding, parts, dimensions, assembly and images, plus the designer questions; images open in a viewer with arrows; the **Download pack (.zip)** button gives you the export. Stop it with Ctrl+C in the terminal.
 
 This is separate from the AI integrations above: it runs only when you start it, is reachable from this computer only, and nothing in the MCP server, the skill or the plugin ever starts it. Large files can be read in place by typing their path.
 

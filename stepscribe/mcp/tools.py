@@ -387,8 +387,13 @@ def export_pack(
     chat_max_images: int = 4,
     chat_max_mb: float = 10.0,
     material: str | None = None,
+    copy_to: str | None = None,
 ) -> str:
-    """Write (or reuse) the portable export; returns paths, token estimates and the SMALL text."""
+    """Write (or reuse) the portable export; returns paths, token estimates and the SMALL text.
+
+    *copy_to* is a folder that also receives a copy (``<name>_stepscribe/`` and its zip), so the
+    result sits next to the STEP file and not only in the cache.
+    """
     from stepscribe.exporter import export, load_result
     from stepscribe.jobs import MANAGER, job_out_dir
 
@@ -427,7 +432,22 @@ def export_pack(
     ]
     if result.dropped_images:
         lines.append("- Left out of the chat bundle: " + "; ".join(result.dropped_images))
+    if copy_to:
+        lines.append(f"- Saved a copy in: {_copy_export(result, Path(copy_to))}")
     return "\n".join(lines) + "\n\n----- SMALL version -----\n\n" + result.small_text()
+
+
+def _copy_export(result: Any, dest: Path) -> Path:
+    """Copy the export folder (and its zip) into *dest*; returns the copied folder."""
+    import shutil
+
+    src = Path(result.folder)
+    dest.mkdir(parents=True, exist_ok=True)
+    target = dest / src.name
+    shutil.copytree(src, target, dirs_exist_ok=True)
+    if result.zip:
+        shutil.copy2(result.zip, dest / Path(result.zip).name)
+    return target
 
 
 def diff(path_a: str, path_b: str) -> str:

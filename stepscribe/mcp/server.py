@@ -109,8 +109,9 @@ def build_server() -> "MCPServer":
         chat_max_images: int = 4,
         chat_max_mb: float = 10.0,
         material: str | None = None,
+        copy_to: str | None = None,
     ) -> str:
-        """Write (or reuse from the cache) the portable export for a STEP path or a finished job_id: returns all file paths, token estimates and the text of the SMALL version."""
+        """Write (or reuse from the cache) the portable export for a STEP path or a finished job_id: returns all file paths, token estimates and the text of the SMALL version. Pass copy_to (a folder, normally the one holding the STEP file) to also save a copy there."""
         return tools.export_pack(
             path_or_job_id,
             small_budget_tokens,
@@ -118,6 +119,7 @@ def build_server() -> "MCPServer":
             chat_max_images,
             chat_max_mb,
             material,
+            copy_to,
         )
 
     @server.tool()
