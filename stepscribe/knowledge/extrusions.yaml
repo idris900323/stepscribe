@@ -1,7 +1,7 @@
 # Aluminium T-slot profiles. Rule 8: every entry has a `source`.
 # outer_mm = [width, height] of the cross-section; slot_width_mm = slot opening; bore_mm = centre bore.
-# TODO: verify slot_width_mm and bore_mm for 3030 and 4040 (catalogues differ between 8 / 8.2 mm and
-#   6.8 / 8.5 mm); only the outer size is matched for those until sourced.
+# TODO: verify slot_width_mm and bore_mm for 4040 (catalogues differ); only its outer size is matched
+#   until sourced.
 kind: extrusion_profile
 entries:
   "2020":
@@ -19,7 +19,9 @@ entries:
   "3030":
     label: 3030 aluminium extrusion
     outer_mm: [30.0, 30.0]
-    source: "Misumi HFS6-3030 catalogue drawing (outer size only; slot and bore TODO: verify)"
+    slot_width_mm: 8.0
+    bore_mm: 6.8
+    source: "Misumi HFS6-3030 catalogue (6 series: slot 8 mm, centre bore 6.8 mm)"
   "4040":
     label: 4040 aluminium extrusion
     outer_mm: [40.0, 40.0]

@@ -8,7 +8,7 @@
 
 ## How to read this document
 
-- **IDs:** PRT part, INS instance, H hole, P hole pattern, C contact (or CP cut-out pattern), J fastener joint, R relation, S slot, PK pocket, B boss, FL fillet, CH chamfer, L link, KJ kinematic joint, M mechanism, W weak spot, Q question. Face IDs look like F0001.
+- **IDs:** PRT part, INS placed part, H hole, P hole pattern, C contact (or CP cut-out pattern), J fastener joint, R relation, S slot, PK pocket, B boss, FL fillet, CH chamfer, L link, KJ kinematic joint, M mechanism, W weak spot, Q question. Face IDs look like F0001.
 - **Facts and guesses:** statements without a prefix are measured. Statements starting with `Likely:` are rule-based inferences with a confidence from 0 to 1 and evidence.
 - **Designer input:** `Confirmed by designer:` is an answer the designer gave; `Designer unsure:` is a soft answer; skipped questions were not answered.
 - **Not known:** thread data, material (unless given), tolerances, loads and the intended purpose, unless the design context says so.
@@ -54,7 +54,7 @@
 
 ## Overview: TwoPlates
 
-TwoPlates has 1 unique part (2 instances): 1 fabricated and 0 purchased hardware.
+TwoPlates has 2 parts (1 different): 1 fabricated and 0 purchased hardware.
 
 ### Design summary
 Likely a static structure with no moving joints. Most fabricated parts look laser or waterjet. 8 fasteners, mostly M3.
@@ -89,11 +89,11 @@ No design context or designer answers were supplied.
 Likely a static structure with no moving joints. Most fabricated parts look laser or waterjet. 8 fasteners, mostly M3.
 
 ### Kinematics
-1 rigid link(s), 0 joint(s) (0 revolute, 0 prismatic), estimated 0 degree(s) of freedom, topology static; ground link L0 (BasePlate + TopPlate (2 instance(s)))
+1 rigid link(s), 0 joint(s) (0 revolute, 0 prismatic), estimated 0 degree(s) of freedom, topology static; ground link L0 (BasePlate + TopPlate (2 part(s)))
 
 ```mermaid
 flowchart LR
-  L0["L0 Ground: BasePlate + TopPlate (2 instance(s))"]
+  L0["L0 Ground: BasePlate + TopPlate (2 part(s))"]
 ```
 
 #### Links (rigid groups)
@@ -106,7 +106,7 @@ flowchart LR
 
 #### Structures
 
-- L0 ground link: likely chassis (0.70); L0 is the ground link: BasePlate + TopPlate (2 instance(s))
+- L0 ground link: likely chassis (0.70); L0 is the ground link: BasePlate + TopPlate (2 part(s))
 
 ### Part roles and process
 

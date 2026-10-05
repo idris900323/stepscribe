@@ -136,7 +136,7 @@ def understanding_markdown(report: Report) -> str:
     lines += [
         "Everything here is a rule-based hypothesis (no model, no network). Statements start with "
         '"Likely:" where they are inferences; each carries a confidence from 0 to 1 and evidence that '
-        "refers to part (PRT), instance (INS), contact (C), joint (J, KJ), link (L) and mechanism (M) IDs.",
+        "refers to part (PRT), placed part (INS), contact (C), joint (J, KJ), link (L) and mechanism (M) IDs.",
         "",
         "## Design summary",
         u.summary,

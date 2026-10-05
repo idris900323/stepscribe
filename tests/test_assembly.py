@@ -143,7 +143,8 @@ def test_pack_includes_assembly_sections(step_files, tmp_path: Path) -> None:  #
     assert "Fastener shopping list" in pack
     overview = (folder / "01_overview.md").read_text(encoding="utf-8")
     assert (
-        "2 instances" in overview and "60.0 (width) × 60.0 (depth) × 10.0 (height) mm" in overview
+        "has 2 parts (1 different)" in overview
+        and "60.0 (width) × 60.0 (depth) × 10.0 (height) mm" in overview
     )
     part_md = next((folder / "03_parts").glob("PRT001_*.md")).read_text(encoding="utf-8")
     assert "## Relations" in part_md

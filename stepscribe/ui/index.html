@@ -299,7 +299,7 @@ function show(s) {
   $('askBtn').parentElement.style.display = $('askBtn').style.display;
   prevView = null;
   const holes = r.parts.reduce((a, p) => a + p.holes, 0);
-  $('stats').innerHTML = [['Parts', r.parts.length], ['Instances', r.instances], ['Holes', holes], ['Relations', r.relations.length],
+  $('stats').innerHTML = [['Different parts', r.parts.length], ['Total parts', r.instances], ['Holes', holes], ['Relations', r.relations.length],
     ['Mass', r.total_mass_g == null ? 'unknown' : r.total_mass_g.toFixed(1) + ' g'], ['Unit in file', r.unit]]
     .map(([k, v]) => `<div class="stat"><span class="mute">${k}</span><b>${esc(v)}</b></div>`).join('');
   const tabs = {

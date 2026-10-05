@@ -15,7 +15,7 @@
 
 ## IDs
 
-PRT part, INS instance (a placed copy of a part), H hole, P hole pattern, CP cut-out pattern, C contact,
+PRT part, INS placed part (one copy of a part in the assembly), H hole, P hole pattern, CP cut-out pattern, C contact,
 J fastener joint, R relation, S slot, PK pocket, B boss, FL fillet, CH chamfer, L rigid link, KJ kinematic
 joint, M mechanism, LP load path, W weak spot, Q question. Face IDs look like F0001.
 
@@ -30,7 +30,7 @@ joint, M mechanism, LP load path, W weak spot, Q question. Face IDs look like F0
 ## Units and frames
 
 Millimetres, degrees, grams. The text states the up and front axes. A hole direction points into the material
-from the entry face. Part files use the part's own frame; assembly placements give each instance's position
+from the entry face. Part files use the part's own frame; assembly placements give each placed part's position
 and rotation in world coordinates.
 
 ## What stepscribe cannot know

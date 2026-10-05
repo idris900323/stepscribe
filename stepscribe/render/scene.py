@@ -159,4 +159,4 @@ def apply_explode(items: list[SceneItem]) -> None:
 def _centre(members: list[SceneItem]) -> Vec:
     lo = np.min([m.bounds()[0] for m in members], axis=0)
     hi = np.max([m.bounds()[1] for m in members], axis=0)
-    return 0.5 * (lo + hi)
+    return np.asarray(0.5 * (lo + hi), dtype=float)

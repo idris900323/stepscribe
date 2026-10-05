@@ -68,7 +68,7 @@ def load_labels(path: str | Path) -> dict[str, Any]:
 
 def _axis_close(a: np.ndarray, b: np.ndarray) -> bool:
     c = abs(float(np.dot(a, b)) / (np.linalg.norm(a) * np.linalg.norm(b)))
-    return math.degrees(math.acos(min(1.0, c))) <= AXIS_TOL_DEG
+    return math.degrees(math.acos(float(min(1.0, c)))) <= AXIS_TOL_DEG
 
 
 def _dist_to_axis(point: np.ndarray, origin: np.ndarray, d: np.ndarray) -> float:

@@ -221,7 +221,7 @@ def _how_to_read() -> str:
         [
             "## How to read this document",
             "",
-            "- **IDs:** PRT part, INS instance, H hole, P hole pattern, C contact (or CP cut-out pattern), "
+            "- **IDs:** PRT part, INS placed part, H hole, P hole pattern, C contact (or CP cut-out pattern), "
             "J fastener joint, R relation, S slot, PK pocket, B boss, FL fillet, CH chamfer, "
             "L link, KJ kinematic joint, M mechanism, W weak spot, Q question. Face IDs look like F0001.",
             "- **Facts and guesses:** statements without a prefix are measured. Statements starting "

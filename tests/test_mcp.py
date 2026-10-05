@@ -18,7 +18,7 @@ def fresh_cache() -> None:
 
 def test_overview_and_part(step_files) -> None:  # type: ignore[no-untyped-def]
     text = tools.get_overview(str(step_files["two_plates_assembly"]))
-    assert "2 instances" in text and "60.0 (width) × 60.0 (depth) × 10.0 (height) mm" in text
+    assert "has 2 parts (1 different)" in text and "60.0 (width) × 60.0 (depth) × 10.0 (height) mm" in text
     part = tools.get_part(str(step_files["two_plates_assembly"]), "PRT001")
     assert "# PRT001 Plate" in part and "TopPlate is bolted to BasePlate" in part
     with pytest.raises(ValueError, match="not found or ambiguous"):

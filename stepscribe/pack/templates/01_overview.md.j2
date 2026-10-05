@@ -1,6 +1,6 @@
 # Overview: {{ o.root_name }}
 
-{{ o.root_name }} has {{ o.n_parts }} unique part{{ '' if o.n_parts == 1 else 's' }} ({{ o.n_instances }} instance{{ '' if o.n_instances == 1 else 's' }}): {{ o.n_fabricated }} fabricated and {{ o.n_hardware }} purchased hardware.
+{{ o.root_name }} has {{ o.n_instances }} part{{ '' if o.n_instances == 1 else 's' }}{{ '' if o.n_instances == o.n_parts else ' (' ~ o.n_parts ~ ' different)' }}: {{ o.n_fabricated }} fabricated and {{ o.n_hardware }} purchased hardware.
 {% if o.summary %}
 
 ## Design summary

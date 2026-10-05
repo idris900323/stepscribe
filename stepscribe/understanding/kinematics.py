@@ -914,7 +914,7 @@ def _link_description(members: list[InstanceData]) -> str:
     big = sorted(members, key=lambda m: -m.ap.part.mass.volume_mm3)
     names = [m.name for m in big[:3]]
     more = f" + {len(members) - 3} more" if len(members) > 3 else ""
-    return " + ".join(names) + more + f" ({len(members)} instance(s))"
+    return " + ".join(names) + more + f" ({len(members)} part(s))"
 
 
 def _final_joints(

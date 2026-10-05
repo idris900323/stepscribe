@@ -9,3 +9,7 @@ __pycache__/
 dist/
 tests/fixtures/step/
 out/
+
+# launch-video output
+brag-output/
+brag-output-*/
