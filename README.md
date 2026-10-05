@@ -2,9 +2,11 @@
 
 Give any LLM X-ray vision into your CAD model. `stepscribe` reads a STEP file and writes an **LLM context pack**: exact measurements, holes, patterns, standard parts, assembly relationships and labelled images, all computed deterministically and offline (no AI model, no network).
 
-[![Watch the 1-minute demo: why stepscribe, the web page and the Claude Code plugin](docs/media/stepscribe-demo.jpg)](docs/media/stepscribe-demo.mp4)
+[![stepscribe: give any LLM X-ray vision into your CAD model. Click to watch the demo](docs/media/stepscribe-demo.jpg)](https://github.com/idris900323/stepscribe/raw/main/docs/media/stepscribe-demo.mp4)
 
-*Watch the 1-minute demo (click the picture): no more screenshots and long explanations to get an AI to understand your model, the web page, and the three Claude Code commands. Made for beginner designers who want AI support.*
+**[Watch the 1-minute demo with sound](https://github.com/idris900323/stepscribe/raw/main/docs/media/stepscribe-demo.mp4)** (opens in your browser's video player). No more screenshots and long explanations to get an AI to understand your model; the web page and the three Claude Code commands; made for beginner designers who want AI support.
+
+![A quick look: the web page, the result and the Claude Code commands](docs/media/stepscribe-preview.gif)
 
 ## Start here
 
