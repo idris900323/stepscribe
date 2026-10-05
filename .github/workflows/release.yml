@@ -12,12 +12,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0
       - run: python -m pip install -e ".[dev,mcp,llm]"
       - run: ruff check .
       - run: mypy stepscribe
       - run: python scripts/sync_skills.py --check
       - run: python scripts/check_release.py --tag "${GITHUB_REF_NAME}"
-      - run: pytest -q -p no:cacheprovider
+      - run: xvfb-run -a pytest -q -p no:cacheprovider
 
   build:
     needs: test
