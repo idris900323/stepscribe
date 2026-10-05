@@ -51,10 +51,12 @@ def test_readme_has_the_documented_sections() -> None:
 def test_readme_commands_and_options_exist(argv: list[str]) -> None:
     assert argv[0] == "stepscribe"
     command, options = argv[1], [a.split("=")[0] for a in argv[2:] if a.startswith("--")]
-    res = runner.invoke(app, [command, "--help"])
+    res = runner.invoke(
+        app, [command, "--help"], env={"NO_COLOR": "1", "TERM": "dumb", "COLUMNS": "200"}
+    )
     assert res.exit_code == 0, f"unknown command {command}"
     for opt in options:
-        assert opt in res.output, f"{command} has no option {opt}"
+        assert opt in re.sub(r"\[[0-9;]*m", "", res.output), f"{command} has no option {opt}"
 
 
 def test_release_checks_pass() -> None:
