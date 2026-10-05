@@ -1,0 +1,11 @@
+# Timing belt profiles. Rule 8: sourced.
+kind: belts
+profiles:
+  GT2-2mm: {pitch_mm: 2.0, source: "https://texasbelting.com/pages/timing-belt-pitch-chart (GT2 available in 2, 3, 5, 8 mm pitch; 2 mm is the 3D-printer standard)"}
+  GT2-3mm: {pitch_mm: 3.0, source: "https://texasbelting.com/pages/timing-belt-pitch-chart"}
+  GT2-5mm: {pitch_mm: 5.0, source: "https://texasbelting.com/pages/timing-belt-pitch-chart"}
+  HTD-3M:  {pitch_mm: 3.0, source: "https://texasbelting.com/pages/htd-vs-gt-timing-belts (HTD pitches 3M, 5M, 8M, 14M, 20M)"}
+  HTD-5M:  {pitch_mm: 5.0, source: "https://texasbelting.com/pages/htd-vs-gt-timing-belts"}
+  HTD-8M:  {pitch_mm: 8.0, source: "https://texasbelting.com/pages/htd-vs-gt-timing-belts"}
+pitch_match_tolerance_mm: 0.15   # measured tooth spacing on the pitch circle vs profile pitch
+# Stocked belt lengths and common pulley tooth counts: TODO: verify (no sourced table yet).

@@ -1,0 +1,1 @@
+Likely a mobile manipulator: a 4-wheel base (none motor-driven) carrying a 2-DOF serial arm (KJ5 revolute about +X via a 3.0:1 GT2-2mm belt, KJ7 revolute about +X). Most fabricated parts look laser or waterjet. Main risks: a hole too close to an edge (W001), a joint on a single bearing (W005).

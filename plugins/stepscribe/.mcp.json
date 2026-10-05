@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "stepscribe": {
+      "command": "stepscribe",
+      "args": ["mcp"]
+    }
+  }
+}

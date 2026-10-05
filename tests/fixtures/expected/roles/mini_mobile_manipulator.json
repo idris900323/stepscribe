@@ -1,0 +1,41 @@
+{
+  "ArmBase": [
+    "base_plate",
+    "motor_mount",
+    "chassis_frame"
+  ],
+  "ArmLink1": [
+    "arm_link"
+  ],
+  "ArmLink2": [
+    "arm_link",
+    "end_effector"
+  ],
+  "Axle": [
+    "shaft_axle"
+  ],
+  "Bearing608": [
+    "bearing"
+  ],
+  "Chassis": [
+    "chassis_frame"
+  ],
+  "PulleyBig": [
+    "pulley"
+  ],
+  "PulleySmall": [
+    "pulley"
+  ],
+  "ShaftA": [
+    "shaft_axle"
+  ],
+  "ShaftB": [
+    "shaft_axle"
+  ],
+  "Stepper": [
+    "motor"
+  ],
+  "Wheel": [
+    "wheel"
+  ]
+}

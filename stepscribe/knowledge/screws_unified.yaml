@@ -1,0 +1,15 @@
+# Unified (UNC) screw reference data. Rule 8: every entry carries a `source`.
+# nominal = major diameter in mm, converted from the inch definition (ASME B1.1):
+#   numbered sizes: D = 0.060 + 0.013 * N inch; fractional sizes: nominal fraction of an inch.
+# tap_drill = tapping drill for UNC ~75 % thread, as listed in Machinery's Handbook, converted to mm.
+# TODO: verify and add UNF rows and clearance-hole columns (free/normal fit); omitted until sourced.
+standard: Unified UNC
+sizes:
+  "#4-40":   {nominal: 2.845, tap_drill: 2.26, source: "ASME B1.1 (major diameter); Machinery's Handbook (tap drill #43)"}
+  "#6-32":   {nominal: 3.505, tap_drill: 2.69, source: "ASME B1.1 (major diameter); Machinery's Handbook (tap drill #36)"}
+  "#8-32":   {nominal: 4.166, tap_drill: 3.45, source: "ASME B1.1 (major diameter); Machinery's Handbook (tap drill #29)"}
+  "#10-24":  {nominal: 4.826, tap_drill: 3.80, source: "ASME B1.1 (major diameter); Machinery's Handbook (tap drill #25)"}
+  "1/4-20":  {nominal: 6.350, tap_drill: 5.11, source: "ASME B1.1 (major diameter); Machinery's Handbook (tap drill #7)"}
+  "5/16-18": {nominal: 7.938, tap_drill: 6.53, source: "ASME B1.1 (major diameter); Machinery's Handbook (tap drill F)"}
+  "3/8-16":  {nominal: 9.525, tap_drill: 7.94, source: "ASME B1.1 (major diameter); Machinery's Handbook (tap drill 5/16 in)"}
+  "1/2-13":  {nominal: 12.700, tap_drill: 10.71, source: "ASME B1.1 (major diameter); Machinery's Handbook (tap drill 27/64 in)"}

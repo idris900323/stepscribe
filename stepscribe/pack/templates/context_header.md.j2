@@ -1,0 +1,14 @@
+# Context pack: {{ name }}
+
+Single-file version for pasting into a chat. Measured facts are plain; inferences start with "Likely:" and carry a confidence. Units are mm, degrees, grams. Up axis {{ up }}, front axis {{ front }}.
+{% if ctx_text %}
+
+## Design context
+{{ ctx_text }}
+{% endif %}
+
+{% if detailed | length < n_parts %}
+This single file is size-limited. Full detail is included for: {{ detailed | join(', ') if detailed else 'none' }}. The other parts have a short paragraph here and their full text in `03_parts/`.
+{% else %}
+Every part is described in full below.
+{% endif %}

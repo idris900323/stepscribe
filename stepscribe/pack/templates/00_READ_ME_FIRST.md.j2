@@ -1,0 +1,19 @@
+# Read me first: how to read this context pack
+
+This pack describes a mechanical design exported from a STEP file. It was produced by a deterministic tool (stepscribe). The tool measured the geometry and applied fixed rules. It used no AI model.
+
+## Conventions
+- **Units:** millimetres, degrees, mm², mm³, grams.
+- **Coordinate system:** up axis is {{ up }}, front axis is {{ front }}. Directions are given as unit vectors (x, y, z).
+- **IDs:** PRT = part, INS = instance, H = hole, P = hole pattern, J = fastener joint, C = contact, R = relation, S = slot, PK = pocket, B = boss, FL = fillet, CH = chamfer. Face IDs are F0001 and so on.
+- **Facts versus guesses:** statements without a prefix are measured facts. Statements that start with "Likely:" are inferences; the number in brackets is a confidence from 0 to 1 and the reason follows.
+- **Hole axis:** the direction vector of a hole points into the material from the entry face. Position is the centre of the entry circle.
+- **Symbols:** Ø diameter, ↧ depth, ⌴ counterbore, ⌵ countersink, THRU through the whole part.
+- **Edge distance:** the wall left between a hole and the nearest outer boundary.
+- **Images:** {% if has_images %}labels on the images use the same IDs as the text.{% else %}none were rendered for this pack.{% endif %}
+
+## Understanding layer
+`05_understanding.md` holds rule-based hypotheses about how the design works: what moves (links, joints, a Mermaid diagram), what drives it (gears, belts, lead screws, motors), what each part is for, how it was probably made, load paths, weak spots, stability and open questions. Everything there is a hypothesis with a confidence and evidence that points to IDs; answers the designer gave are marked "Confirmed by designer"; "Designer unsure" marks soft answers.
+
+## What this pack does not know
+Thread data (STEP files rarely carry it), material (unless stated), tolerances, loads, and the intended purpose, unless the design context file says so.

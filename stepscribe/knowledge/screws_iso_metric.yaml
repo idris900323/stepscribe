@@ -1,0 +1,27 @@
+# ISO metric screw reference data. Rule 8: every entry carries a `source`.
+# Columns (mm):
+#   nominal  - major thread diameter (ISO 261 / ISO 262)
+#   pitch    - coarse pitch (ISO 261)
+#   close / normal / loose - clearance hole, ISO 273 fine / medium / coarse series
+#   tap_drill - tapping drill for coarse thread, ~75 % thread (ISO 2306 / Machinery's Handbook)
+#   cbore_d  - counterbore diameter for ISO 4762 socket head cap screws (DIN 974-1 / ISO 4762 annex)
+#   head_d / head_k - ISO 4762 max head diameter and height
+#   nut_m    - ISO 4032 max nut height
+# TODO: verify cbore_d for M20 and M24 before adding; counterbore depths intentionally omitted.
+standard: ISO metric
+source_default: "ISO 273 (clearance), ISO 261 (nominal, pitch), ISO 4762 (head), ISO 4032 (nut)"
+sizes:
+  M1.6: {nominal: 1.6, pitch: 0.35, close: 1.7, normal: 1.8, loose: 2.0, tap_drill: 1.25, nut_m: 1.3, source: "ISO 273; ISO 261; ISO 2306; ISO 4032"}
+  M2:   {nominal: 2.0, pitch: 0.4, close: 2.2, normal: 2.4, loose: 2.6, tap_drill: 1.6, head_d: 3.8, head_k: 2.0, nut_m: 1.6, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; ISO 4032"}
+  M2.5: {nominal: 2.5, pitch: 0.45, close: 2.7, normal: 2.9, loose: 3.1, tap_drill: 2.05, head_d: 4.5, head_k: 2.5, nut_m: 2.0, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; ISO 4032"}
+  M3:   {nominal: 3.0, pitch: 0.5, close: 3.2, normal: 3.4, loose: 3.6, tap_drill: 2.5, cbore_d: 6.5, head_d: 5.5, head_k: 3.0, nut_m: 2.4, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; DIN 974-1; ISO 4032"}
+  M4:   {nominal: 4.0, pitch: 0.7, close: 4.3, normal: 4.5, loose: 4.8, tap_drill: 3.3, cbore_d: 8.0, head_d: 7.0, head_k: 4.0, nut_m: 3.2, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; DIN 974-1; ISO 4032"}
+  M5:   {nominal: 5.0, pitch: 0.8, close: 5.3, normal: 5.5, loose: 5.8, tap_drill: 4.2, cbore_d: 9.5, head_d: 8.5, head_k: 5.0, nut_m: 4.7, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; DIN 974-1; ISO 4032"}
+  M6:   {nominal: 6.0, pitch: 1.0, close: 6.4, normal: 6.6, loose: 7.0, tap_drill: 5.0, cbore_d: 11.0, head_d: 10.0, head_k: 6.0, nut_m: 5.2, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; DIN 974-1; ISO 4032"}
+  M8:   {nominal: 8.0, pitch: 1.25, close: 8.4, normal: 9.0, loose: 10.0, tap_drill: 6.8, cbore_d: 15.0, head_d: 13.0, head_k: 8.0, nut_m: 6.8, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; DIN 974-1; ISO 4032"}
+  M10:  {nominal: 10.0, pitch: 1.5, close: 10.5, normal: 11.0, loose: 12.0, tap_drill: 8.5, cbore_d: 18.0, head_d: 16.0, head_k: 10.0, nut_m: 8.4, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; DIN 974-1; ISO 4032"}
+  M12:  {nominal: 12.0, pitch: 1.75, close: 13.0, normal: 13.5, loose: 14.5, tap_drill: 10.2, cbore_d: 20.0, head_d: 18.0, head_k: 12.0, nut_m: 10.8, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; DIN 974-1; ISO 4032"}
+  M14:  {nominal: 14.0, pitch: 2.0, close: 15.0, normal: 15.5, loose: 16.5, tap_drill: 12.0, head_d: 21.0, head_k: 14.0, nut_m: 12.8, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; ISO 4032"}
+  M16:  {nominal: 16.0, pitch: 2.0, close: 17.0, normal: 17.5, loose: 18.5, tap_drill: 14.0, cbore_d: 26.0, head_d: 24.0, head_k: 16.0, nut_m: 14.8, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; DIN 974-1; ISO 4032"}
+  M20:  {nominal: 20.0, pitch: 2.5, close: 21.0, normal: 22.0, loose: 24.0, tap_drill: 17.5, head_d: 30.0, head_k: 20.0, nut_m: 18.0, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; ISO 4032"}
+  M24:  {nominal: 24.0, pitch: 3.0, close: 25.0, normal: 26.0, loose: 28.0, tap_drill: 21.0, head_d: 36.0, head_k: 24.0, nut_m: 21.5, source: "ISO 273; ISO 261; ISO 2306; ISO 4762; ISO 4032"}

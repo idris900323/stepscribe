@@ -1,0 +1,101 @@
+# Manufacturing-process inference rules. Rule 3: every weight lives here.
+# Each process is scored as the sum of the weights of the signals that fire; confidence is
+# score / (score + confidence_k), so more independent evidence helps but never reaches 1.0.
+# Rule 7: every domain number carries a `source`; values without one are left out (TODO: verify).
+
+confidence_k: 2.0        # larger = slower to become confident
+fallback_floor: 0.5      # weak evidence that a complex shape is printed when nothing else fires
+
+# Signals and the weight each adds to a process. Comments say why the weight is what it is.
+weights:
+  sheet_metal:
+    has_bends: 2.0           # bends joining flat legs of constant thickness are the strongest sign
+    shape_sheet_metal: 1.5   # the shape classifier already found constant-thickness bent sheet
+    flanges: 0.8             # flat legs connected through bends
+    name_hint: 0.8
+  laser_or_waterjet:
+    profile_extrusion: 3.0   # every face is a cap or a wall perpendicular to the caps: a cut 2D profile
+    plate_shape: 0.5         # classified as a plate
+    name_hint: 0.8
+  cnc_turned:
+    axisymmetric: 3.0        # high-fold rotational symmetry with coaxial faces
+    name_hint: 0.8
+  cnc_milled:
+    tool_accessible: 1.0     # every feature reachable from at most 3 directions
+    radiused_vertical_corners: 1.5   # concave corners with a radius: what an end mill leaves
+    blind_features: 1.0      # pockets and blind holes are made by milling or printing, not cutting
+    sharp_vertical_internal_corners: -3.0  # impossible to mill: strong evidence AGAINST
+    name_hint: 0.8
+  injection_molded:
+    draft: 2.5               # 0.5-3 deg draft on walls along a common pull direction
+    ribs_and_bosses: 0.8
+    freeform_faces: 0.4
+    name_hint: 0.8
+  fdm_3d_printed:
+    sharp_internal_corners: 1.5      # sharp concave corners where a cutter could not reach
+    not_tool_accessible: 1.5         # features from more than 3 directions
+    freeform_faces: 1.0
+    wall_multiple_of_nozzle: 0.5
+    name_hint: 2.0                   # "print", "pla", "petg" in the name
+  sla_or_sls_printed:
+    name_hint: 1.5
+  extruded_profile:
+    extrusion_tag: 3.0               # constant section along the long axis (Phase 5 semantic tag)
+  purchased:
+    hardware: 3.0                    # hardware detection from Phase 5
+
+thresholds:
+  profile_cap_offsets: 2           # exactly two distinct cap planes
+  access_axes_max: 3
+  draft_min_deg: 0.5
+  draft_max_deg: 3.0
+  draft_area_fraction: 0.3         # of the wall area
+  freeform_area_fraction: 0.3
+  sharp_corner_min_length_mm: 1.0
+  radiused_corner_min_radius_mm: 1.0
+  nozzle_mm: 0.4
+  nozzle_multiple_tol_mm: 0.05
+  axisymmetric_min_fold: 8
+  axisymmetric_area_fraction: 0.8
+
+# Name keywords per process (lower-case substrings).
+name_keywords:
+  fdm_3d_printed: [print, pla, petg, abs, 3dp, fdm, tpu]
+  sla_or_sls_printed: [sla, sls, resin, mjf]
+  sheet_metal: [sheetmetal, sheet_metal, bent]
+  laser_or_waterjet: [laser, waterjet, dxf]
+  cnc_milled: [cnc, milled, machined]
+  cnc_turned: [turned, lathe]
+  injection_molded: [molded, moulded, injection]
+
+# Words in design_context.yaml `manufacturing` mapped to a process (user override, confidence 1.0).
+context_keywords:
+  fdm_3d_printed: ["3d print", "3d-print", "fdm", "pla", "petg", "printed"]
+  sla_or_sls_printed: [sla, sls, resin, mjf]
+  sheet_metal: ["sheet metal", "sheet-metal", "bent"]
+  laser_or_waterjet: [laser, waterjet]
+  cnc_milled: [cnc, mill, machined]
+  cnc_turned: [lathe, turned]
+  injection_molded: [molded, moulded, injection]
+
+# Minimum wall thickness guidelines (mm) used by the weak-spot rules.
+min_wall_mm:
+  fdm_3d_printed:
+    value: 0.8
+    source: "https://formlabs.com/blog/minimum-wall-thickness-3d-printing/ (FDM: at least twice the nozzle diameter, 0.8 mm for a 0.4 mm nozzle)"
+  sla_or_sls_printed:
+    value: 0.5
+    source: "https://formlabs.com/blog/minimum-wall-thickness-3d-printing/ (resin SLA: 0.5 mm for small parts; SLS from 1.0 mm, so 0.5 is the SLA-only floor)"
+  cnc_milled:
+    value: 0.8
+    source: "https://hubs.com/knowledge-base/how-design-parts-cnc-machining (recommended minimum 0.8 mm for metals, 1.5 mm for plastics)"
+  # sheet_metal, laser_or_waterjet, cnc_turned, injection_molded: TODO: verify (no sourced value yet)
+
+min_wall_plastic_cnc_mm:
+  value: 1.5
+  source: "https://hubs.com/knowledge-base/how-design-parts-cnc-machining"
+
+# Hole edge distance as a multiple of the hole diameter (Phase 2 rule 7.7); process-dependent.
+edge_distance_factor:
+  metal: 1.5
+  fdm_3d_printed: 2.0

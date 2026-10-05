@@ -1,0 +1,45 @@
+# Rolling bearings: bore (id), outside diameter (od), width. Rule 8: every entry has a `source`.
+# Source for all rows: ISO 15:2017 boundary dimensions (radial bearings) as published in
+# manufacturer catalogues (SKF general catalogue); linear bearings: LMxxUU manufacturer drawings.
+kind: bearing
+source_default: "ISO 15:2017; SKF general catalogue"
+entries:
+  "683":  {id_mm: 3.0, od_mm: 7.0, width_mm: 3.0, source: "ISO 15:2017; SKF general catalogue"}
+  "684":  {id_mm: 4.0, od_mm: 9.0, width_mm: 4.0, source: "ISO 15:2017; SKF general catalogue"}
+  "685":  {id_mm: 5.0, od_mm: 11.0, width_mm: 5.0, source: "ISO 15:2017; SKF general catalogue"}
+  "686":  {id_mm: 6.0, od_mm: 13.0, width_mm: 5.0, source: "ISO 15:2017; SKF general catalogue"}
+  "687":  {id_mm: 7.0, od_mm: 14.0, width_mm: 3.5, source: "ISO 15:2017; SKF general catalogue"}
+  "688":  {id_mm: 8.0, od_mm: 16.0, width_mm: 4.0, source: "ISO 15:2017; SKF general catalogue"}
+  "623":  {id_mm: 3.0, od_mm: 10.0, width_mm: 4.0, source: "ISO 15:2017; SKF general catalogue"}
+  "624":  {id_mm: 4.0, od_mm: 13.0, width_mm: 5.0, source: "ISO 15:2017; SKF general catalogue"}
+  "625":  {id_mm: 5.0, od_mm: 16.0, width_mm: 5.0, source: "ISO 15:2017; SKF general catalogue"}
+  "626":  {id_mm: 6.0, od_mm: 19.0, width_mm: 6.0, source: "ISO 15:2017; SKF general catalogue"}
+  "627":  {id_mm: 7.0, od_mm: 22.0, width_mm: 7.0, source: "ISO 15:2017; SKF general catalogue"}
+  "608":  {id_mm: 8.0, od_mm: 22.0, width_mm: 7.0, source: "ISO 15:2017; SKF general catalogue"}
+  "609":  {id_mm: 9.0, od_mm: 24.0, width_mm: 7.0, source: "ISO 15:2017; SKF general catalogue"}
+  "604":  {id_mm: 4.0, od_mm: 12.0, width_mm: 4.0, source: "ISO 15:2017; SKF general catalogue"}
+  "605":  {id_mm: 5.0, od_mm: 14.0, width_mm: 5.0, source: "ISO 15:2017; SKF general catalogue"}
+  "606":  {id_mm: 6.0, od_mm: 17.0, width_mm: 6.0, source: "ISO 15:2017; SKF general catalogue"}
+  "607":  {id_mm: 7.0, od_mm: 19.0, width_mm: 6.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6000": {id_mm: 10.0, od_mm: 26.0, width_mm: 8.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6001": {id_mm: 12.0, od_mm: 28.0, width_mm: 8.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6002": {id_mm: 15.0, od_mm: 32.0, width_mm: 9.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6003": {id_mm: 17.0, od_mm: 35.0, width_mm: 10.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6004": {id_mm: 20.0, od_mm: 42.0, width_mm: 12.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6005": {id_mm: 25.0, od_mm: 47.0, width_mm: 12.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6200": {id_mm: 10.0, od_mm: 30.0, width_mm: 9.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6201": {id_mm: 12.0, od_mm: 32.0, width_mm: 10.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6202": {id_mm: 15.0, od_mm: 35.0, width_mm: 11.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6203": {id_mm: 17.0, od_mm: 40.0, width_mm: 12.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6204": {id_mm: 20.0, od_mm: 47.0, width_mm: 14.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6205": {id_mm: 25.0, od_mm: 52.0, width_mm: 15.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6800": {id_mm: 10.0, od_mm: 19.0, width_mm: 5.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6801": {id_mm: 12.0, od_mm: 21.0, width_mm: 5.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6802": {id_mm: 15.0, od_mm: 24.0, width_mm: 5.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6900": {id_mm: 10.0, od_mm: 22.0, width_mm: 6.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6901": {id_mm: 12.0, od_mm: 24.0, width_mm: 6.0, source: "ISO 15:2017; SKF general catalogue"}
+  "6902": {id_mm: 15.0, od_mm: 28.0, width_mm: 7.0, source: "ISO 15:2017; SKF general catalogue"}
+  "LM6UU":  {id_mm: 6.0, od_mm: 12.0, width_mm: 19.0, source: "LM6UU linear ball bearing, manufacturer drawing (e.g. Misumi / generic RepRap parts)"}
+  "LM8UU":  {id_mm: 8.0, od_mm: 15.0, width_mm: 24.0, source: "LM8UU linear ball bearing: 8 mm bore, 15 mm OD, 24 mm length, https://adafruit.com/product/1181 and https://www.123bearing.com/bearings-LM8-UU-ZEN"}
+  "LM10UU": {id_mm: 10.0, od_mm: 19.0, width_mm: 29.0, source: "LM10UU linear ball bearing, manufacturer drawing"}
+  "LM12UU": {id_mm: 12.0, od_mm: 21.0, width_mm: 30.0, source: "LM12UU linear ball bearing, manufacturer drawing"}

@@ -1,0 +1,13 @@
+{
+  "name": "stepscribe",
+  "displayName": "stepscribe",
+  "version": "0.1.0",
+  "description": "Understand STEP CAD files of mechanical designs and robots: measured facts, how they move, weak spots, and portable Markdown exports. Runs offline.",
+  "author": {
+    "name": "idris sadiq"
+  },
+  "homepage": "https://github.com/idris900323/stepscribe",
+  "repository": "https://github.com/idris900323/stepscribe",
+  "license": "AGPL-3.0-only",
+  "keywords": ["cad", "step", "robotics", "mechanical", "design-review"]
+}

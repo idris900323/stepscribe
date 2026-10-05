@@ -1,0 +1,13 @@
+{
+  "Arm": [
+    "arm_link",
+    "end_effector"
+  ],
+  "MotorPlate": [
+    "motor_mount",
+    "base_plate"
+  ],
+  "Stepper": [
+    "motor"
+  ]
+}

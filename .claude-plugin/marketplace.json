@@ -1,0 +1,17 @@
+{
+  "name": "stepscribe",
+  "description": "Plugins for understanding STEP CAD files of mechanical designs and robots.",
+  "owner": {
+    "name": "idris sadiq"
+  },
+  "plugins": [
+    {
+      "name": "stepscribe",
+      "source": "./plugins/stepscribe",
+      "description": "Analyse STEP files offline: measured facts, how the design moves, weak spots, and portable Markdown exports.",
+      "version": "0.1.0",
+      "license": "AGPL-3.0-only",
+      "keywords": ["cad", "step", "robotics", "mechanical", "design-review"]
+    }
+  ]
+}

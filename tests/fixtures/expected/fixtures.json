@@ -1,0 +1,31 @@
+{
+  "cube_10": {"volume": 1000.0, "area": 600.0, "bbox": [10, 10, 10], "shape": "block", "holes": 0},
+  "cube_1in": {"bbox": [25.4, 25.4, 25.4], "unit": "in", "holes": 0},
+  "plate_4xM3": {
+    "bbox": [60, 60, 5], "shape": "plate", "thickness": 5.0, "holes": 4,
+    "hole": {"d": 3.4, "through": true, "edge": 8.3, "standard": "M3", "fit": "clearance_normal"},
+    "pattern": {"kind": "rectangular_grid", "count": 4, "pitch": [40.0, 40.0]}
+  },
+  "rotated_plate": {
+    "bbox_obb": [60, 60, 5], "shape": "plate", "thickness": 5.0, "holes": 4,
+    "hole": {"d": 3.4, "through": true, "edge": 8.3, "standard": "M3", "fit": "clearance_normal"},
+    "pattern": {"kind": "rectangular_grid", "count": 4, "pitch": [40.0, 40.0]}
+  },
+  "nema17_plate": {"shape": "plate", "thickness": 4.0, "holes": 5, "pattern": {"kind": "rectangular_grid", "count": 4, "pitch": [31.0, 31.0]}},
+  "blind_holes": {"holes": 2, "depths": [10.0, 12.0], "bottoms": ["flat", "drill_point"], "d": 4.2, "threaded": true},
+  "cbore": {"holes": 1, "d": 5.5, "cbore_d": 9.5, "cbore_depth": 5.4, "standard": "M5"},
+  "csk": {"holes": 1, "d": 5.5, "csk_d": 9.0, "csk_angle": 90.0},
+  "boss_and_shaft": {"holes": 1, "d": 2.5, "bosses": 1, "boss_d": 8.0},
+  "slot_and_fillets": {"holes": 0, "slots": 1, "slot_width": 6.0, "slot_length": 20.0, "fillet_r": 2.0, "fillets": 4},
+  "pocket": {"holes": 0, "pockets": 1, "pocket_depth": 4.0, "pocket_corner": 2.0},
+  "split_cylinder": {"holes": 1, "d": 6.0},
+  "bolt_circle": {"holes": 6, "pattern": {"kind": "circular", "count": 6, "pcd": 60.0, "pitch_deg": 60.0}},
+  "linear_row": {"holes": 5, "pattern": {"kind": "linear", "count": 5, "pitch": 15.0}},
+  "l_bracket": {"shape": "l_bracket", "thickness": 3.0, "holes": 2},
+  "extrusion_2020_like": {"shape": "extrusion_profile", "holes": 1},
+  "tube": {"shape": "tube", "holes": 1, "d": 14.0},
+  "bearing_block": {"holes": 1, "d": 12.0, "cbore_d": 22.0, "cbore_depth": 7.0},
+  "thin_wall_box": {"shape": "housing", "holes": 0, "min_wall": 1.2},
+  "chamfer_block": {"holes": 0, "chamfers": 4, "chamfer_distance": 1.5},
+  "multi_solid": {"parts": 2}
+}

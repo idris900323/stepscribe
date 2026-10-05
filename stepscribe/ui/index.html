@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stepscribe</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --paper:#F2F4F1; --sheet:#FFFFFF; --ink:#1B2430; --mute:#58636F; --line:#CBD3CE; --faint:#E4E9E5;
+    --dim:#C42B2B; --blue:#1F5FAE; --ok:#1F7A3E; --bad:#B3261E; --code:#EBEFEC; --on-blue:#FFFFFF;
+    --head: Bahnschrift, "DIN Alternate", "Avenir Next Condensed", "Segoe UI Semibold", system-ui, sans-serif;
+    --body: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper:#12161A; --sheet:#1A2026; --ink:#E6EBE8; --mute:#9AA6A0; --line:#323B42; --faint:#232B31;
+            --dim:#FF6B5E; --blue:#6AA9FF; --ok:#4CC27A; --bad:#FF8A80; --code:#0E1215; --on-blue:#0B1420; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin:0; font:16px/1.55 var(--body); background:var(--paper); color:var(--ink); }
+  :focus-visible { outline:2px solid var(--blue); outline-offset:2px; }
+
+  header { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:6px 24px;
+           max-width:1100px; margin:0 auto; padding:22px 16px 14px; }
+  header h1 { margin:0; font:600 30px/1 var(--head); letter-spacing:.01em; }
+  header p { margin:0; }
+  .brand p { color:var(--mute); margin-top:6px; max-width:52ch; }
+  .where { color:var(--mute); font-size:14px; max-width:46ch; text-align:right; }
+  main { max-width:1100px; margin:0 auto; padding:6px 16px 72px; }
+
+  .card { background:var(--sheet); border:1px solid var(--line); border-radius:3px; padding:20px 22px; margin-bottom:16px; }
+  h2 { display:flex; align-items:center; gap:10px; margin:0 0 12px; font:600 21px/1.2 var(--head); letter-spacing:.01em; }
+  h2 .mute { font:400 15px var(--body); }
+  .step { display:inline-grid; place-items:center; width:26px; height:26px; border:1.5px solid var(--ink); border-radius:2px;
+          font:600 15px/1 var(--head); }
+
+  #drop { position:relative; border:1.5px dashed var(--line); border-radius:3px; padding:34px 22px; text-align:center;
+          color:var(--mute); cursor:pointer; font-size:17px; background:var(--paper); }
+  #drop:hover { border-color:var(--mute); }
+  #drop.over { border-color:var(--blue); color:var(--blue); background:var(--sheet); }
+  #drop .hint { margin-top:8px; }
+  .row { display:flex; flex-wrap:wrap; gap:14px 16px; align-items:flex-start; margin-top:14px; }
+  label { display:flex; flex-direction:column; font-size:15px; color:var(--mute); gap:5px; }
+  input[type=text], input[type=number], select { font:16px var(--body); padding:9px 11px; border:1px solid var(--line);
+          border-radius:3px; background:var(--paper); color:var(--ink); min-width:130px; }
+  input[type=text]:hover, input[type=number]:hover, select:hover { border-color:var(--mute); }
+  label.chk { flex-direction:row; align-items:center; gap:6px; font-size:16px; color:var(--ink); }
+  button { font:500 16px var(--body); padding:9px 16px; border-radius:3px; border:1px solid var(--line); background:var(--sheet);
+           color:var(--ink); cursor:pointer; }
+  button:hover:not(:disabled) { border-color:var(--ink); }
+  button.primary { background:var(--blue); border-color:var(--blue); color:var(--on-blue); }
+  button.primary:hover:not(:disabled) { filter:brightness(1.08); border-color:var(--blue); }
+  button:disabled { opacity:.45; cursor:default; }
+  .mute { color:var(--mute); font-size:15px; }
+  .err { color:var(--bad); white-space:pre-wrap; font-weight:500; }
+  .hint { font-size:14px; color:var(--mute); font-weight:400; max-width:270px; line-height:1.4; }
+  .fields { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px 18px; }
+  .fields.two { grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); }
+  .fields label { gap:6px; color:var(--ink); font-weight:500; }
+  .fields input, .fields select { width:100%; }
+  .fields .hint, #drop .hint { max-width:none; }
+  .lead { margin:0 0 4px; color:var(--mute); font-size:15px; }
+  h2.step2 { margin-top:26px; }
+  .actions { display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); }
+  #askControls { display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); column-gap:16px; }
+  #askControls > textarea, #askControls > label:not(.opt) { grid-column:1 / -1; }
+  #chip > div { min-width:0; } #chipSub, #chipName { overflow-wrap:anywhere; }
+  .btnwrap { display:flex; flex-direction:column; gap:5px; align-items:flex-start; }
+
+  /* progress drawn as a CAD dimension line */
+  #bar { position:relative; height:34px; margin:14px 0 6px; background:none; overflow:visible;
+         border-left:1.5px solid var(--mute); border-right:1.5px solid var(--mute); }
+  #bar::before { content:""; position:absolute; left:0; right:0; top:50%; height:1px; background:var(--line); }
+  #fill { position:relative; height:100%; width:0; transition:width .4s ease-out; border-right:2px solid var(--dim); }
+  #fill::before { content:""; position:absolute; left:0; right:0; top:50%; height:2px; margin-top:-1px; background:var(--dim); }
+  #fill::after { content:attr(data-pct); white-space:nowrap; position:absolute; right:-2px; top:-4px; transform:translateX(50%);
+                 font:600 15px/1 var(--head); color:var(--dim); background:var(--sheet); padding:2px 6px; }
+  #fill[data-pct=""]::after { display:none; }
+  #progCard.done h2 { margin-bottom:2px; }
+  #progCard.done #bar, #progCard.done #progMsg, #progCard.done #progCancelRow { display:none; }
+
+  .tabs { display:flex; gap:2px; margin:6px 0 14px; border-bottom:1px solid var(--line); overflow-x:auto; }
+  .tabs button { border:none; border-bottom:3px solid transparent; border-radius:0; background:none; padding:9px 14px; color:var(--mute);
+                 white-space:nowrap; margin-bottom:-1px; }
+  .tabs button:hover { color:var(--ink); border-bottom-color:var(--line); }
+  .tabs button.on { border-bottom-color:var(--ink); color:var(--ink); font-weight:600; }
+
+  .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(118px, 1fr)); margin-bottom:16px; border:1px solid var(--line);
+           border-radius:3px; background:var(--line); gap:1px; overflow:hidden; }
+  .stat { background:var(--sheet); padding:10px 14px; }
+  .stat .mute { display:block; font-size:14px; }
+  .stat b { display:block; font:600 24px/1.2 var(--head); margin-top:2px; }
+
+  table { width:100%; border-collapse:collapse; font-size:15px; }
+  th, td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--faint); vertical-align:top; }
+  th { color:var(--mute); font-weight:600; font-size:14px; border-bottom:1px solid var(--line); background:var(--paper); }
+  tr:hover td { background:var(--paper); }
+  .tabbody-wrap { overflow-x:auto; }
+  pre { background:var(--code); padding:14px; border-radius:3px; overflow:auto; max-height:560px;
+        font:14.5px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace; white-space:pre-wrap; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; }
+  .grid img { width:100%; border:1px solid var(--line); border-radius:3px; cursor:zoom-in; background:#fff; display:block; }
+  .grid .mute { margin-top:4px; font-size:13.5px; word-break:break-all; }
+
+  details { border:1px solid var(--line); border-radius:3px; padding:9px 14px; margin:8px 0; }
+  details[open] { background:var(--paper); }
+  summary { cursor:pointer; }
+  .codebox { position:relative; } .codebox pre { padding-top:44px; margin-top:0; }
+  .cp { position:absolute; top:8px; right:10px; font-size:14px; padding:4px 11px; }
+
+  #chip { display:none; align-items:center; gap:14px; padding:12px 16px; border:1px solid var(--ok); border-left-width:4px; border-radius:3px; background:var(--paper); }
+  #chip .tick { color:var(--ok); font-size:20px; font-weight:700; }
+  #chip .nm { font:600 18px var(--head); word-break:break-all; }
+
+  .sev { display:inline-block; padding:1px 9px; border-radius:2px; font-size:13px; font-weight:600; color:#fff; }
+  .sev-high { background:var(--dim); } .sev-medium { background:#A8650C; } .sev-low { background:#4A6FA5; } .sev-info { background:var(--mute); }
+  @keyframes flash { from { background:rgba(255,200,0,.45); } to { background:transparent; } }
+  .flash { animation:flash 2.4s ease-out; }
+  #askCard { border-color:var(--blue); border-left-width:4px; }
+  #askCard img { max-width:100%; max-height:340px; border:1px solid var(--line); border-radius:3px; background:#fff; }
+  .opt { display:flex; flex-direction:row; align-items:center; gap:10px; color:var(--ink); padding:7px 0; font-size:17px; cursor:pointer; }
+  .opt input { width:18px; height:18px; accent-color:var(--blue); }
+  .change { margin-top:14px; padding:10px 14px; border-left:4px solid var(--ok); background:var(--paper); border-radius:3px; }
+  .conflict { border-left:4px solid var(--dim); background:var(--paper); padding:9px 14px; margin:8px 0; border-radius:3px; }
+  textarea { width:100%; min-height:76px; padding:9px 11px; border:1px solid var(--line); border-radius:3px; background:var(--paper); color:var(--ink); font:inherit; }
+  .sec { margin:18px 0 4px; font:600 18px var(--head); letter-spacing:.01em; }
+  .sec + .mute { margin-bottom:6px; }
+  ul { margin:6px 0; padding-left:22px; }
+  li { margin:2px 0; }
+
+  #lightbox { position:fixed; inset:0; background:rgba(8,12,16,.88); display:none; flex-direction:column; align-items:center; justify-content:center; gap:10px; z-index:9; cursor:zoom-out; }
+  #lightbox img { max-width:calc(100vw - 150px); max-height:calc(100vh - 90px); background:#fff; cursor:default; }
+  #lbcap { color:#e6e9ee; font-size:15px; text-align:center; padding:0 16px; }
+  .lbnav { position:absolute; top:50%; transform:translateY(-50%); width:52px; height:52px; border-radius:50%; border:1px solid rgba(255,255,255,.4); background:rgba(0,0,0,.55); color:#fff; font-size:26px; line-height:1; padding:0; cursor:pointer; }
+  .lbnav:hover { background:rgba(255,255,255,.2); }
+  .lbnav:focus-visible, #lbclose:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
+  #lbprev { left:20px; } #lbnext { right:20px; }
+  #lbclose { position:absolute; top:16px; right:20px; width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,.4); background:rgba(0,0,0,.55); color:#fff; font-size:20px; padding:0; cursor:pointer; }
+
+  @media (max-width:640px) {
+    header { padding-top:16px; } .where { text-align:left; }
+    .card { padding:16px 14px; }
+    #lightbox img { max-width:calc(100vw - 16px); }
+    .lbnav { top:auto; bottom:14px; transform:none; } #lbprev { left:16px; } #lbnext { right:16px; }
+    .stat b { font-size:21px; }
+  }
+  @media (prefers-reduced-motion: reduce) { #fill { transition:none; } .flash { animation:none; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><h1>stepscribe</h1><p>Turn a STEP file into a plain-language description of the design.</p></div>
+  <p class="where">Version {{VERSION}}. Runs on this computer; your file is not sent anywhere.</p>
+</header>
+<main>
+  <div class="card" id="inputCard">
+    <h2><span class="step">1</span>Choose a STEP file</h2>
+    <div id="chip"><span class="tick">✓</span><div style="flex:1"><div class="nm" id="chipName"></div><div class="mute" id="chipSub"></div></div><button id="change">Change file</button></div>
+    <div id="pickers"><div id="drop">Drop a .step or .stp file here, or click to browse<input id="file" type="file" accept=".step,.stp,.STEP,.STP" hidden>
+      <div class="hint">Read on this computer only. Large assemblies take a few minutes; a time estimate is shown.</div></div>
+    <div class="row fields two">
+      <label>Path on this computer<input type="text" id="path" placeholder="C:/path/to/robot.step">
+        <span class="hint">Best for big files: read in place, nothing is copied.</span></label>
+      <label>Sample files<select id="samples"><option value="">none found</option></select>
+        <span class="hint">STEP files in the robot_steps folder next to the project.</span></label>
+    </div></div>
+    <h2 class="step2"><span class="step">2</span>Options <span class="mute">all optional</span></h2>
+    <p class="lead">Images with dimensions and the collision check are always included.</p>
+    <div class="row fields opts">
+      <label>Material<input type="text" id="material" placeholder="alu, steel, pla, petg...">
+        <span class="hint">Gives each part a mass. Empty: mass unknown.</span></label>
+      <label>Density (g/cm³)<input type="number" id="density" step="0.01" min="0">
+        <span class="hint">Instead of a material, e.g. 2.70 for aluminium.</span></label>
+      <label>Up axis<select id="up"><option>+Z</option><option>-Z</option><option>+Y</option><option>-Y</option><option>+X</option><option>-X</option></select>
+        <span class="hint">The model axis that points up.</span></label>
+      <label>Front axis<select id="front"><option>-Y</option><option>+Y</option><option>+X</option><option>-X</option><option>+Z</option><option>-Z</option></select>
+        <span class="hint">The axis that faces you. Not the up axis.</span></label>
+    </div>
+    <div class="row">
+      <div class="btnwrap"><button class="primary" id="go">Analyse</button></div>
+    </div>
+    <div class="mute" id="picked"></div>
+  </div>
+
+  <div class="card" id="progCard" style="display:none">
+    <h2 id="progTitle">Working…</h2>
+    <div id="bar"><div id="fill" data-pct=""></div></div>
+    <div id="progMsg" class="mute"></div>
+    <div id="progEta" class="mute"></div>
+    <div class="row" id="progCancelRow"><div class="btnwrap"><button id="cancel">Cancel</button><span class="hint">Stops this run; nothing is saved.</span></div></div>
+    <div class="err" id="err"></div>
+  </div>
+
+  <div class="card" id="resCard" style="display:none">
+    <div class="stats" id="stats"></div>
+    <div class="row" style="margin:0 0 10px">
+      <div class="btnwrap"><button class="primary" id="askBtn">Ask me questions</button><span class="hint">What geometry cannot tell; each answer updates the analysis.</span></div>
+      <div class="btnwrap"><a id="zip"><button>Download pack (.zip)</button></a><span class="hint">Text, part files, images and report.json.</span></div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div id="tabBody"></div>
+  </div>
+  <div class="card" id="askCard" style="display:none">
+    <h2>Questions for you</h2>
+    <div class="mute" id="askProgress"></div>
+    <div id="askImgWrap" style="margin:10px 0"></div>
+    <div id="askText" style="font-weight:600;font-size:18px;margin:8px 0"></div>
+    <div class="mute" id="askWhy"></div>
+    <div id="askControls" style="margin:10px 0"></div>
+    <div class="row actions">
+      <div class="btnwrap"><button class="primary" id="askAnswer">Answer</button><span class="hint">Use this answer now.</span></div>
+      <div class="btnwrap"><button id="askUnsure">Not sure</button><span class="hint">Keep the guess as a soft fact.</span></div>
+      <div class="btnwrap"><button id="askSkip">Skip</button><span class="hint">Keep the guess; do not ask again.</span></div>
+      <div class="btnwrap"><button id="askBack">Back</button><span class="hint">Undo the last answer.</span></div>
+      <div class="btnwrap"><button id="askDone">Done</button><span class="hint">Stop; download the pack for the update.</span></div>
+    </div>
+    <div class="change" id="askChange" style="display:none"></div>
+  </div>
+</main>
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button id="lbclose" aria-label="Close">✕</button>
+  <button class="lbnav" id="lbprev" aria-label="Previous image">‹</button>
+  <img id="lbimg" alt="">
+  <div id="lbcap"></div>
+  <button class="lbnav" id="lbnext" aria-label="Next image">›</button>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+let chosenFile = null, jobId = null, timer = null, result = null;
+const reveal = el => el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const fmtEta = s => s == null ? 'estimating…' : s < 60 ? `about ${Math.round(s)} s` : `about ${Math.floor(s/60)} min ${String(Math.round(s%60)).padStart(2,'0')} s`;
+const fmtT = s => s < 60 ? `${s.toFixed(0)} s` : `${Math.floor(s/60)} min ${String(Math.round(s%60)).padStart(2,'0')} s`;
+
+$('drop').onclick = () => $('file').click();
+$('drop').ondragover = e => { e.preventDefault(); $('drop').classList.add('over'); };
+$('drop').ondragleave = () => $('drop').classList.remove('over');
+$('drop').ondrop = e => { e.preventDefault(); $('drop').classList.remove('over'); pick(e.dataTransfer.files[0]); };
+$('file').onchange = e => pick(e.target.files[0]);
+function chip(name, sub) { $('chipName').textContent = name; $('chipSub').textContent = sub; $('chip').style.display = 'flex'; $('pickers').style.display = 'none'; $('picked').textContent = ''; }
+function pick(f) { if (!f) return; chosenFile = f; $('path').value = ''; chip(f.name, `${(f.size/1e6).toFixed(1)} MB, loaded in the browser. It is sent to this computer's local server when you press Analyse.`); }
+$('change').onclick = () => { chosenFile = null; $('path').value = ''; $('samples').value = ''; $('file').value = ''; $('chip').style.display = 'none'; $('pickers').style.display = ''; };
+$('path').onchange = () => { const v = $('path').value.trim(); if (v) { chosenFile = null; chip(v.split(/[\/]/).pop(), 'Read in place from ' + v + ' (nothing is copied).'); } };
+$('samples').onchange = () => { const v = $('samples').value; if (v) { $('path').value = v; chosenFile = null; chip(v.split(/[\/]/).pop(), 'Sample file, read in place from ' + v); } };
+fetch('/api/samples').then(r => r.json()).then(list => {
+  if (!list.length) return;
+  $('samples').innerHTML = '<option value="">choose…</option>' + list.map(s => `<option value="${esc(s.path)}">${esc(s.name)} (${s.mb} MB)</option>`).join('');
+});
+
+function params() {
+  return { material: $('material').value, density: $('density').value, up: $('up').value, front: $('front').value,
+           images: true, interference: true };
+}
+$('go').onclick = async () => {
+  $('err').textContent = ''; $('resCard').style.display = 'none';
+  let res;
+  const p = params();
+  const qs = new URLSearchParams({ ...p, name: chosenFile ? chosenFile.name : '' });
+  if (chosenFile) res = await fetch('/api/upload?' + qs, { method: 'POST', body: chosenFile });
+  else if ($('path').value.trim()) res = await fetch('/api/start_path', { method: 'POST', body: JSON.stringify({ ...p, path: $('path').value.trim() }) });
+  else { alert('Choose a file or enter a path first.'); return; }
+  const j = await res.json();
+  if (j.error) { $('progCard').style.display = ''; $('err').textContent = j.error; return; }
+  jobId = j.id; $('progCard').classList.remove('done'); $('progCard').style.display = ''; $('go').disabled = true; $('cancel').disabled = false;
+  $('progTitle').textContent = 'Analysing…'; reveal($('progCard')); poll();
+  timer = setInterval(poll, 800);
+};
+$('cancel').onclick = async () => { await fetch('/api/cancel?id=' + jobId, { method: 'POST' }); };
+
+async function poll() {
+  const s = await (await fetch('/api/status?id=' + jobId)).json();
+  $('fill').style.width = Math.round(s.fraction * 100) + '%'; $('fill').dataset.pct = s.done ? '' : Math.round(s.fraction * 100) + ' %';
+  $('progMsg').textContent = `${s.stage}: ${s.message}`;
+  $('progEta').textContent = s.done ? `Elapsed ${fmtT(s.elapsed_s)}` : `Elapsed ${fmtT(s.elapsed_s)}; remaining ${fmtEta(s.eta_s)} (the estimate improves as parts finish)`;
+  if (s.done) {
+    clearInterval(timer); $('go').disabled = false; $('cancel').disabled = true;
+    if (s.error) { $('progTitle').textContent = 'Stopped'; $('err').textContent = s.error; return; }
+    $('progTitle').textContent = 'Done'; $('progCard').classList.add('done'); result = s.result; show(s); reveal($('progCard'));
+  }
+}
+
+function codebox(text) { return `<div class="codebox"><button class="cp">Copy</button><pre>${esc(text)}</pre></div>`; }
+document.addEventListener('click', async e => {
+  const b = e.target.closest('.cp'); if (!b) return;
+  const text = b.parentElement.querySelector('pre').textContent;
+  try { await navigator.clipboard.writeText(text); b.textContent = 'Copied ✓'; } catch (err) { b.textContent = 'Copy failed'; }
+  setTimeout(() => b.textContent = 'Copy', 1800);
+});
+function table(head, rows) {
+  return `<table><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</table>`;
+}
+function list(items, empty = 'none') { return items.length ? `<ul>${items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : `<div class="mute">${empty}</div>`; }
+function show(s) {
+  const r = s.result, id = s.id;
+  $('resCard').style.display = '';
+  $('zip').href = (r.understanding ? '/api/pack/download?id=' : '/api/zip?id=') + id;
+  $('askBtn').style.display = r.understanding && r.understanding.questions.length ? '' : 'none';
+  $('askBtn').parentElement.style.display = $('askBtn').style.display;
+  prevView = null;
+  const holes = r.parts.reduce((a, p) => a + p.holes, 0);
+  $('stats').innerHTML = [['Parts', r.parts.length], ['Instances', r.instances], ['Holes', holes], ['Relations', r.relations.length],
+    ['Mass', r.total_mass_g == null ? 'unknown' : r.total_mass_g.toFixed(1) + ' g'], ['Unit in file', r.unit]]
+    .map(([k, v]) => `<div class="stat"><span class="mute">${k}</span><b>${esc(v)}</b></div>`).join('');
+  const tabs = {
+    'Context pack': ['Everything an AI model needs, in one text. Copy it into any chat.', () => codebox(r.context_pack)],
+    'Understanding': ['How the design works: motion, drives, part roles and risks.', understandingTab],
+    'Parts': ['One row per unique part: shape, size, holes and patterns.', () => table(['ID', 'Name', 'Shape (confidence)', 'Size mm', 'Holes', 'Patterns / tags', 'Warnings'],
+      r.parts.map(p => [p.id, esc(p.name), `${esc(p.shape)} (${p.confidence.toFixed(2)})`, p.size, p.holes,
+        esc([...p.patterns, ...p.tags].join('; ')) || '-', esc(p.warnings.join('; ')) || '-']))],
+    'Dimensions': ['Every part and feature with its dimensions in mm.', () => {
+      const n = (v, d = 0) => v == null ? 'unknown' : Number(v).toLocaleString(undefined, { maximumFractionDigits: d });
+      const head = table(['ID', 'Name', 'Box (oriented) mm', 'Box (axis-aligned) mm', 'Volume mm³', 'Surface area mm²', 'Mass g', 'Thinnest wall mm'],
+        r.parts.map(p => [p.id, esc(p.name), p.dims.obb.join(' x '), p.dims.bbox.join(' x '), n(p.dims.volume_mm3), n(p.dims.area_mm2), n(p.dims.mass_g, 1), p.dims.wall == null ? '-' : p.dims.wall.toFixed(2)]));
+      const one = p => { const d = p.dims; const sec = (t, items) => items.length ? `<div class="sec">${t} (${items.length})</div>${list(items)}` : '';
+        return `<details><summary><b>${esc(p.id)}</b> ${esc(p.name)}: features</summary>`
+          + (d.holes.length ? `<div class="sec">Holes (${d.holes.length})</div>${table(['ID', 'Diameter', 'Depth', 'Counterbore / countersink', 'To nearest edge'], d.holes)}` : '')
+          + (d.cutouts.length ? `<div class="sec">Cutouts (${d.cutouts.length})</div><div class="mute">Levels run from the entry face inward; centre is measured from the outline corner, like the hole positions.</div>${table(['ID', 'Kind', 'Levels', 'Total depth', 'To nearest edge or opening'], d.cutouts)}` : '')
+          + sec('Slots', d.slots) + sec('Pockets', d.pockets) + sec('Bosses', d.bosses) + sec('Fillets', d.fillets) + sec('Chamfers', d.chamfers)
+          + (d.holes.length + d.cutouts.length + d.slots.length + d.pockets.length + d.bosses.length + d.fillets.length + d.chamfers.length ? '' : '<div class="mute">No holes, cutouts, slots, pockets, bosses, fillets or chamfers found.</div>')
+          + `</details>`; };
+      return head + '<div class="mute" style="margin:10px 0 4px">Open a part to see its feature dimensions.</div>' + r.parts.map(one).join('');
+    }],
+    'Assembly': ['How the parts fit together, and the fasteners to buy.', () => `<div class="sec">Bill of materials</div><div class="mute">Each unique part and how many copies there are.</div>${list(r.bom, 'single part')}<div class="sec">Relations</div><div class="mute">Which parts rest on, sit inside or are fastened to which.</div>${list(r.relations)}<div class="sec">Fastener joints</div><div class="mute">Screws and the holes they pass through, with the size inferred.</div>${list(r.joints)}<div class="sec">Shopping list</div><div class="mute">Standard hardware implied by the holes and joints.</div>${list(r.shopping)}`],
+    'Images': ['Labelled views with dimensions in mm. Click one to enlarge.', () => r.images.length ? `<div class="grid">${r.images.map(i => `<div><img loading="lazy" src="/files/${id}/${i}" data-src="/files/${id}/${i}"><div class="mute">${esc(i)}</div></div>`).join('')}</div>` : '<div class="mute">No images were rendered (the option was off).</div>'],
+  };
+  if (r.warnings.length || r.errors.length) tabs['Warnings'] = ['What the tool was unsure about or skipped. Check these first.', () => `${list(r.warnings, 'no file-level warnings')}${r.errors.length ? `<div class="sec">Errors</div>${list(r.errors.map(e => JSON.stringify(e)))}` : ''}`];
+  $('tabs').innerHTML = Object.keys(tabs).map((t, i) => `<button class="${i ? '' : 'on'}" data-t="${t}">${t}</button>`).join('');
+  const open = async t => {
+    window.__current = t;
+    [...$('tabs').children].forEach(b => b.classList.toggle('on', b.dataset.t === t));
+    if (t === 'Context pack' && result.stale) {
+      $('tabBody').innerHTML = '<div class="mute">Rebuilding the text with your answers...</div>';
+      const p = await (await fetch('/api/pack/preview?id=' + id)).json();
+      if (p.context_pack) { result.context_pack = p.context_pack; result.stale = false; }
+    }
+    $('tabBody').innerHTML = `<div class="mute" style="margin-bottom:10px;max-width:80ch">${tabs[t][0]}</div><div class="tabbody-wrap">` + tabs[t][1]() + `</div>`;
+  };
+  window.__open = open;
+  tabs['Context pack'][1] = () => codebox(result.context_pack);
+  $('tabs').onclick = e => { if (e.target.dataset.t) open(e.target.dataset.t); };
+  open('Context pack');
+}
+
+// ---------------------------------------------------------------- understanding tab and interview
+let askState = null, prevView = null;
+const sevBadge = s => `<span class="sev sev-${esc(s)}">${esc(s)}</span>`;
+function understandingTab() {
+  const u = result && result.understanding;
+  if (!u) return '<div class="mute">The understanding layer produced nothing for this file.</div>';
+  const old = prevView, flash = (cond) => cond ? ' class="flash"' : '';
+  const oldSpots = old ? new Set(old.weak_spots.map(w => w.id + w.message)) : null;
+  const oldRoles = old ? Object.fromEntries(old.roles.map(r => [r.id, r.role])) : null;
+  const joints = u.joints.length ? table(['ID', 'Kind', 'From', 'To', 'Confidence', 'Driven by', 'What'], u.joints.map(j => [j.id, j.kind, j.parent, j.child, j.confidence.toFixed(2), esc(j.driven_by) || '-', esc(j.description)])) : '<div class="mute">No joints: nothing moves.</div>';
+  const mech = u.mechanisms.length ? list(u.mechanisms.map(m => `${m.id} ${m.kind}: ${m.description}`)) : '<div class="mute">No gears, belts, lead screws or direct drives found.</div>';
+  const roles = table(['Part', 'Name', 'Likely role', 'Confidence', 'Why', 'Likely process'], u.roles.map(r => [r.id, esc(r.name), `<span${flash(oldRoles && oldRoles[r.id] !== r.role)}>${esc(r.role)}</span>`, r.confidence == null ? '' : r.confidence.toFixed(2), esc(r.evidence), esc(r.process) + (r.process_by_designer ? ' (you)' : r.process_confidence != null ? ` (${r.process_confidence.toFixed(2)})` : '')]));
+  const spots = u.weak_spots.length ? table(['ID', 'Severity', 'Finding', 'Suggestion', 'Depends on'], u.weak_spots.map(w => [w.id, sevBadge(w.severity), `<span${flash(oldSpots && !oldSpots.has(w.id + w.message))}>${esc(w.message)}</span>`, esc(w.suggestion), esc(w.assumption)])) : '<div class="mute">No weak-spot rule fired.</div>';
+  return `<div class="sec">Summary</div><p>${esc(u.summary)}</p>`
+    + (u.conflicts.length ? `<div class="sec">Your answers versus the geometry</div>${u.conflicts.map(c => `<div class="conflict">${esc(c)}</div>`).join('')}` : '')
+    + `<div class="sec">Kinematics (${esc(u.topology)}, about ${u.dof} degree(s) of freedom)</div><div class="mute">${esc(u.kinematics)}</div>${joints}${mech}`
+    + `<div class="sec">Diagram (Mermaid: paste it into a Markdown file to draw it)</div>${codebox(u.mermaid)}`
+    + `<div class="sec">What each part is for</div><div class="mute">Every role is a hypothesis; the Why column is its strongest evidence.</div>${roles}`
+    + `<div class="sec">Weak spots</div>${spots}`
+    + (u.load_paths.length ? `<div class="sec">Load paths</div>${list(u.load_paths)}` : '')
+    + (u.stability ? `<div class="sec">Stability</div><p>${esc(u.stability)}</p>` : '')
+    + (u.answers.length ? `<div class="sec">Your answers</div>${list(u.answers.map(a => `${a.status === 'answered' ? 'Confirmed by designer' : a.status === 'not_sure' ? 'Designer unsure' : 'Skipped'}: ${a.question}${a.status === 'answered' ? ' -> ' + (Array.isArray(a.value) ? a.value.join(', ') : a.value) : ''}`))}` : '');
+}
+function askControls(q) {
+  const opts = q.options || [];
+  if (q.answer_type === 'single_choice' || q.answer_type === 'yes_no') {
+    const list2 = q.answer_type === 'yes_no' && !opts.length ? [{value: 'yes', label: 'Yes'}, {value: 'no', label: 'No'}] : opts;
+    return list2.map(o => `<label class="opt"><input type="radio" name="askopt" value="${esc(o.value)}" ${o.value === q.default_guess ? 'checked' : ''}> ${esc(o.label)}${o.value === q.default_guess ? ' <span class="mute">(my guess)</span>' : ''}</label>`).join('');
+  }
+  if (q.answer_type === 'multi_choice') return opts.map(o => `<label class="opt"><input type="checkbox" name="askopt" value="${esc(o.value)}"> ${esc(o.label)}</label>`).join('');
+  if (q.answer_type === 'number' || q.answer_type === 'number_with_unit') return `<label>Your number${q.unit ? ' (' + esc(q.unit) + ')' : ''}<input type="text" id="askNum" placeholder="e.g. 300"></label>`;
+  return `<textarea id="askTxt" placeholder="Your answer. A best guess is fine."></textarea>`;
+}
+function askValue(q) {
+  if (q.answer_type === 'single_choice' || q.answer_type === 'yes_no') { const c = document.querySelector('input[name=askopt]:checked'); return c ? c.value : null; }
+  if (q.answer_type === 'multi_choice') return [...document.querySelectorAll('input[name=askopt]:checked')].map(c => c.value);
+  if (q.answer_type === 'number' || q.answer_type === 'number_with_unit') return $('askNum').value.trim() || null;
+  return $('askTxt').value.trim() || null;
+}
+function askRender(st) {
+  if (st.error) { $('askChange').style.display = ''; $('askChange').textContent = st.error; return; }
+  askState = st;
+  if (st.understanding) { prevView = result.understanding; result.understanding = st.understanding; result.stale = true; if (window.__current === 'Understanding') window.__open('Understanding'); }
+  const q = st.question;
+  $('askBack').disabled = !st.can_undo;
+  if (st.change) { $('askChange').style.display = ''; $('askChange').textContent = st.change.text + ` (${st.change.seconds.toFixed(2)} s)`; $('askChange').classList.remove('flash'); void $('askChange').offsetWidth; $('askChange').classList.add('flash'); }
+  if (!q) {
+    $('askProgress').textContent = 'No more questions worth asking.';
+    $('askText').textContent = 'That is everything I need. Your answers are applied; use "Download pack" for the updated files.';
+    $('askWhy').textContent = ''; $('askControls').innerHTML = ''; $('askImgWrap').innerHTML = '';
+    $('askAnswer').disabled = $('askSkip').disabled = $('askUnsure').disabled = true;
+    return;
+  }
+  $('askAnswer').disabled = $('askSkip').disabled = $('askUnsure').disabled = false;
+  $('askProgress').textContent = `Question ${st.asked + 1}; about ${Math.max(st.remaining - 1, 0)} more after this one`;
+  $('askText').textContent = q.text;
+  $('askWhy').textContent = 'Why I ask: ' + q.why;
+  $('askControls').innerHTML = askControls(q);
+  const refs = (q.refs || []).filter(r => /^(PRT|INS|L|KJ)/.test(r)).join(',');
+  $('askImgWrap').innerHTML = refs ? `<img alt="highlighted: ${esc(refs)}" src="/api/render?id=${jobId}&highlight=${encodeURIComponent(refs)}">` : '';
+}
+async function askCall(url, body) {
+  const res = await fetch(url, body === undefined ? {} : { method: 'POST', body: JSON.stringify(body) });
+  return res.json();
+}
+async function askStart() {
+  $('askCard').style.display = '';
+  $('askChange').style.display = 'none';
+  askRender(await askCall('/api/questions/next?id=' + jobId));
+  $('askCard').scrollIntoView({ behavior: 'smooth' });
+}
+async function askSend(status) {
+  if (!askState || !askState.question) return;
+  const q = askState.question;
+  const value = status === 'answered' ? askValue(q) : null;
+  if (status === 'answered' && (value == null || (Array.isArray(value) && !value.length))) { alert('Choose or type an answer first, or use Not sure or Skip.'); return; }
+  askRender(await askCall('/api/answers?id=' + jobId, { question_id: q.id, status, value }));
+}
+$('askAnswer').onclick = () => askSend('answered');
+$('askUnsure').onclick = () => askSend('not_sure');
+$('askSkip').onclick = () => askSend('skipped');
+$('askBack').onclick = async () => askRender(await askCall('/api/answers/undo?id=' + jobId, {}));
+$('askDone').onclick = () => { $('askCard').style.display = 'none'; };
+$('askBtn').onclick = askStart;
+const preJob = new URLSearchParams(location.search).get('job');
+if (preJob) { jobId = preJob; $('progCard').style.display = ''; $('go').disabled = true; $('progTitle').textContent = 'Analysing...'; poll(); timer = setInterval(poll, 800); }
+let lbList = [], lbIdx = 0;
+function lbShow(i) {
+  lbIdx = (i + lbList.length) % lbList.length;
+  const el = lbList[lbIdx];
+  $('lbimg').src = el.dataset.src;
+  $('lbcap').textContent = `${lbIdx + 1} of ${lbList.length}: ${el.dataset.src.split('/').pop()}`;
+  const many = lbList.length > 1;
+  $('lbprev').style.display = $('lbnext').style.display = many ? '' : 'none';
+}
+function lbOpen(img) {
+  lbList = [...document.querySelectorAll('#tabBody img[data-src]')];
+  $('lightbox').style.display = 'flex';
+  lbShow(Math.max(lbList.indexOf(img), 0));
+  $('lbnext').focus();
+}
+const lbClose = () => { $('lightbox').style.display = 'none'; };
+document.addEventListener('click', e => { if (e.target.tagName === 'IMG' && e.target.dataset.src) lbOpen(e.target); });
+$('lightbox').onclick = e => { if (e.target === $('lightbox')) lbClose(); };
+$('lbclose').onclick = lbClose;
+$('lbprev').onclick = e => { e.stopPropagation(); lbShow(lbIdx - 1); };
+$('lbnext').onclick = e => { e.stopPropagation(); lbShow(lbIdx + 1); };
+document.addEventListener('keydown', e => {
+  if ($('lightbox').style.display !== 'flex') return;
+  if (e.key === 'ArrowLeft') { lbShow(lbIdx - 1); e.preventDefault(); }
+  else if (e.key === 'ArrowRight') { lbShow(lbIdx + 1); e.preventDefault(); }
+  else if (e.key === 'Escape') lbClose();
+});
+</script>
+</body>
+</html>

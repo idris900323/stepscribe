@@ -1,0 +1,14 @@
+# Gear data for mechanism detection. Rule 8: sourced; unsure values are flagged.
+kind: gears
+pressure_angle_deg:
+  value: 20.0
+  source: "ISO 53:1998 / ISO 54:1996 (20 degree standard pressure angle), see https://www.iso.org/standard/33092.html for the hobs made to ISO 54 and ISO 53"
+# Preferred module series I of ISO 54:1996 (mm). TODO: verify against the standard text; the
+# values are the commonly published first-choice series.
+standard_modules_mm: [0.5, 0.6, 0.8, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0]
+module_snap_tolerance: 0.03     # relative: snap to the standard module if within 3 %
+mesh_centre_distance_tolerance_modules: 0.1   # centre distance within 0.1 m of (d1+d2)/2
+formulas:
+  outside_diameter: "OD = m * (N + 2)   (external spur gear, standard addendum)"
+  pitch_diameter: "d = m * N"
+  source: "standard spur gear geometry (ISO 21771 definitions)"

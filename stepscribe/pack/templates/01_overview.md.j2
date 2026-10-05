@@ -1,0 +1,52 @@
+# Overview: {{ o.root_name }}
+
+{{ o.root_name }} has {{ o.n_parts }} unique part{{ '' if o.n_parts == 1 else 's' }} ({{ o.n_instances }} instance{{ '' if o.n_instances == 1 else 's' }}): {{ o.n_fabricated }} fabricated and {{ o.n_hardware }} purchased hardware.
+{% if o.summary %}
+
+## Design summary
+{{ o.summary }}
+{% endif %}
+
+## Key facts
+- Overall size: {{ o.size }} (up {{ o.up }}, front {{ o.front }})
+{% if o.mass %}
+- Total mass: {{ o.mass }}{{ ' (estimated from material guesses)' if o.mass_estimated else '' }}
+{% else %}
+- Total mass: unknown (no material given; pass --material or --density)
+{% endif %}
+{% if o.com %}
+- Centre of mass: {{ o.com }} mm
+{% endif %}
+{% if o.subassemblies %}
+- Subassemblies: {{ o.subassemblies | join(', ') }}
+{% endif %}
+{% for f in o.fasteners %}
+- Fastener: {{ f }}
+{% endfor %}
+{% if o.headline %}
+
+## Headline features
+{% for h in o.headline %}
+- {{ h }}
+{% endfor %}
+{% endif %}
+{% if o.top_spots %}
+
+## Top weak spots
+{% for t in o.top_spots %}
+- {{ t }}
+{% endfor %}
+{% endif %}
+{% if o.images %}
+
+## Images
+Labels are part IDs; parts placed more than once are numbered, e.g. PRT001#2.
+{% for i in o.images %}
+- {{ i }}
+{% endfor %}
+{% endif %}
+
+## Most important parts
+{% for t in o.top_parts %}
+- {{ t }}
+{% endfor %}

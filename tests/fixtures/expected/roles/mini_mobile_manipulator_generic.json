@@ -1,0 +1,41 @@
+{
+  "Part1": [
+    "chassis_frame"
+  ],
+  "Part10": [
+    "arm_link",
+    "end_effector"
+  ],
+  "Part11": [
+    "motor"
+  ],
+  "Part12": [
+    "pulley"
+  ],
+  "Part13": [
+    "pulley"
+  ],
+  "Part2": [
+    "bearing"
+  ],
+  "Part3": [
+    "shaft_axle"
+  ],
+  "Part4": [
+    "wheel"
+  ],
+  "Part6": [
+    "base_plate",
+    "motor_mount",
+    "chassis_frame"
+  ],
+  "Part7": [
+    "shaft_axle"
+  ],
+  "Part8": [
+    "shaft_axle"
+  ],
+  "Part9": [
+    "arm_link"
+  ]
+}

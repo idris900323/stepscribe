@@ -1,0 +1,890 @@
+{
+  "meta": {
+    "schema_version": "0.4.0",
+    "tool_version": "0.1.0",
+    "generated_at": null,
+    "source_files": [
+      "plate_4xM3.step"
+    ],
+    "original_length_unit": "mm",
+    "tolerances": {
+      "AABB_INFLATE": 0.1,
+      "ANGULAR_TOL_DEG": 0.5,
+      "BORE_PROBE_MAX": 0.05,
+      "BORE_PROBE_REL": 0.1,
+      "BOSS_BASE_AREA_FACTOR": 1.2,
+      "BOSS_MAX_HEIGHT_RATIO": 1.5,
+      "CBORE_MATCH_BOOST": 0.2,
+      "CBORE_MATCH_TOL": 0.3,
+      "CHAMFER_LONG_EDGE_REL": 0.6,
+      "CHAMFER_MAX_ANGLE_DEG": 70.0,
+      "CHAMFER_MAX_ASPECT": 0.4,
+      "CHAMFER_MAX_WIDTH_REL": 0.1,
+      "CHAMFER_MIN_ANGLE_DEG": 20.0,
+      "CHARS_PER_TOKEN": 4.0,
+      "COAXIAL_TOL": 0.01,
+      "CONTACT_TOL": 0.05,
+      "CSK_SNAP_TOL_DEG": 1.0,
+      "CUTOUT_ARC_STEP_DEG": 3.0,
+      "CUTOUT_AXIS_DOT": 0.995,
+      "CUTOUT_CHAIN_TOL": 0.001,
+      "CUTOUT_FLAT_DOT": 0.995,
+      "CUTOUT_HOST_AREA_REL": 0.05,
+      "CUTOUT_MAX_NOTCHES": 12.0,
+      "CUTOUT_MAX_VERTICES": 12.0,
+      "CUTOUT_MIN_STEP": 0.01,
+      "CUTOUT_NOTCH_MAX_EDGES": 12.0,
+      "CUTOUT_NOTCH_MAX_REL": 0.5,
+      "CUTOUT_NOTCH_MIN_DEPTH": 0.5,
+      "CUTOUT_RADIUS_TOL": 0.001,
+      "CUTOUT_RIGHT_ANGLE_TOL_DEG": 0.5,
+      "CUTOUT_WALL_DOT": 0.1,
+      "DEFAULT_BUDGET_TOKENS": 40000.0,
+      "DEFAULT_TIMEOUT_S": 300.0,
+      "DRILL_POINT_ANGLE": 118.0,
+      "DRILL_POINT_TOL_DEG": 3.0,
+      "EDGE_DISTANCE_MAX_FACES": 600.0,
+      "FLOAT_PRECISION": 4.0,
+      "FULL_BORE_MIN_SPAN_DEG": 359.0,
+      "HOLE_CLASSIFY_OFFSET_MIN": 0.05,
+      "HOLE_CLASSIFY_OFFSET_REL": 0.01,
+      "LINEAR_TOL": 0.001,
+      "MESH_ANGULAR_DEFLECTION": 0.3,
+      "MESH_DEFLECTION_REL": 0.001,
+      "MIN_FEATURE_SIZE": 0.1,
+      "NEAR_MISS_MAX": 1.0,
+      "OBB_MESH_DEFLECTION_MIN": 0.001,
+      "OBB_MESH_DEFLECTION_REL": 0.0001,
+      "PARTIAL_BORE_MIN_SPAN_DEG": 190.0,
+      "PATTERN_ANGLE_TOL_DEG": 0.1,
+      "PATTERN_DIAMETER_TOL": 0.01,
+      "PATTERN_FIT_TOL": 0.01,
+      "PERCENTILE_WALL": 5.0,
+      "SLOT_SPAN_DEG": 180.0,
+      "SLOT_SPAN_TOL_DEG": 2.0,
+      "STANDARD_MATCH_MIN_CONF": 0.3,
+      "STANDARD_MATCH_SCALE": 0.15,
+      "STANDARD_MATCH_TOP_N": 3.0,
+      "TANGENT_TOL_DEG": 2.0,
+      "THREAD_EXACT_TOL": 0.001,
+      "THREAD_TAP_CONF": 0.7,
+      "WALL_SAMPLES": 200.0,
+      "WALL_SEED": 12345.0
+    },
+    "options": {
+      "density": null,
+      "material": "alu",
+      "up": "+Z",
+      "front": "-Y",
+      "check_interference": false,
+      "understanding": true,
+      "check_motion": false,
+      "debug_graphs": false
+    }
+  },
+  "parts": [
+    {
+      "id": "PRT001",
+      "name": "plate_4xM3",
+      "source_file": "plate_4xM3.step",
+      "content_hash": "72a93cf8673d777b",
+      "is_valid_solid": true,
+      "bbox": {
+        "min": {
+          "x": -30.0,
+          "y": -30.0,
+          "z": -2.5
+        },
+        "max": {
+          "x": 30.0,
+          "y": 30.0,
+          "z": 2.5
+        },
+        "size": {
+          "x": 60.0,
+          "y": 60.0,
+          "z": 5.0
+        }
+      },
+      "obb": {
+        "center": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "axes": [
+          {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0
+          }
+        ],
+        "half_sizes": {
+          "x": 30.0,
+          "y": 30.0,
+          "z": 2.5
+        },
+        "size_sorted": [
+          60.0,
+          60.0,
+          5.0
+        ]
+      },
+      "mass": {
+        "volume_mm3": 17818.4159,
+        "surface_area_mm2": 8540.9947,
+        "centroid": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "density_g_cm3": 2.7,
+        "mass_g": 48.1097,
+        "material_assumed": "alu",
+        "material_source": "user",
+        "inertia_tensor_g_mm2": [
+          [
+            14483.7636,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            14483.7636,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            28767.07
+          ]
+        ]
+      },
+      "topology": {
+        "solids": 1,
+        "shells": 1,
+        "faces": 10,
+        "edges": 24,
+        "vertices": 16,
+        "face_types": {
+          "cylinder": 4,
+          "plane": 6
+        }
+      },
+      "shape_class": {
+        "confidence": 0.9,
+        "evidence": "thickness 5.0 < 0.2 × 60.0; 83% of area on two parallel planes",
+        "label": "plate",
+        "thickness_mm": 5.0,
+        "notes": []
+      },
+      "holes": [
+        {
+          "id": "H001",
+          "axis": {
+            "origin": {
+              "x": -20.0,
+              "y": -20.0,
+              "z": 2.5
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -1.0
+            }
+          },
+          "diameter_mm": 3.4,
+          "depth_mm": 5.0,
+          "is_through": true,
+          "entry_type": "plain",
+          "counterbore_diameter_mm": null,
+          "counterbore_depth_mm": null,
+          "countersink_diameter_mm": null,
+          "countersink_angle_deg": null,
+          "bottom_type": "through",
+          "segments": [
+            {
+              "kind": "cylinder",
+              "diameter_mm": 3.4,
+              "diameter_small_mm": null,
+              "cone_angle_deg": null,
+              "start_depth_mm": 0.0,
+              "end_depth_mm": 5.0,
+              "face_ids": [
+                "F0001"
+              ]
+            }
+          ],
+          "standard_matches": [
+            {
+              "confidence": 1.0,
+              "evidence": "Ø3.40 vs ISO 273 medium Ø3.40 for M3 (dev +0.00 mm)",
+              "standard": "ISO 273 medium",
+              "designation": "M3",
+              "fit": "clearance_normal",
+              "nominal_diameter_mm": 3.4,
+              "deviation_mm": 0.0
+            },
+            {
+              "confidence": 0.6667,
+              "evidence": "Ø3.40 vs UNC tap drill Ø3.45 for #8-32 (dev -0.05 mm)",
+              "standard": "UNC tap drill",
+              "designation": "#8-32",
+              "fit": "tap_drill",
+              "nominal_diameter_mm": 3.45,
+              "deviation_mm": -0.05
+            },
+            {
+              "confidence": 0.3333,
+              "evidence": "Ø3.40 vs ISO 2306 tap drill Ø3.30 for M4 (dev +0.10 mm)",
+              "standard": "ISO 2306 tap drill",
+              "designation": "M4",
+              "fit": "tap_drill",
+              "nominal_diameter_mm": 3.3,
+              "deviation_mm": 0.1
+            }
+          ],
+          "likely_threaded": false,
+          "entry_face_id": "F0008",
+          "edge_distance_mm": 8.3,
+          "warnings": []
+        },
+        {
+          "id": "H002",
+          "axis": {
+            "origin": {
+              "x": -20.0,
+              "y": 20.0,
+              "z": 2.5
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -1.0
+            }
+          },
+          "diameter_mm": 3.4,
+          "depth_mm": 5.0,
+          "is_through": true,
+          "entry_type": "plain",
+          "counterbore_diameter_mm": null,
+          "counterbore_depth_mm": null,
+          "countersink_diameter_mm": null,
+          "countersink_angle_deg": null,
+          "bottom_type": "through",
+          "segments": [
+            {
+              "kind": "cylinder",
+              "diameter_mm": 3.4,
+              "diameter_small_mm": null,
+              "cone_angle_deg": null,
+              "start_depth_mm": 0.0,
+              "end_depth_mm": 5.0,
+              "face_ids": [
+                "F0002"
+              ]
+            }
+          ],
+          "standard_matches": [
+            {
+              "confidence": 1.0,
+              "evidence": "Ø3.40 vs ISO 273 medium Ø3.40 for M3 (dev +0.00 mm)",
+              "standard": "ISO 273 medium",
+              "designation": "M3",
+              "fit": "clearance_normal",
+              "nominal_diameter_mm": 3.4,
+              "deviation_mm": 0.0
+            },
+            {
+              "confidence": 0.6667,
+              "evidence": "Ø3.40 vs UNC tap drill Ø3.45 for #8-32 (dev -0.05 mm)",
+              "standard": "UNC tap drill",
+              "designation": "#8-32",
+              "fit": "tap_drill",
+              "nominal_diameter_mm": 3.45,
+              "deviation_mm": -0.05
+            },
+            {
+              "confidence": 0.3333,
+              "evidence": "Ø3.40 vs ISO 2306 tap drill Ø3.30 for M4 (dev +0.10 mm)",
+              "standard": "ISO 2306 tap drill",
+              "designation": "M4",
+              "fit": "tap_drill",
+              "nominal_diameter_mm": 3.3,
+              "deviation_mm": 0.1
+            }
+          ],
+          "likely_threaded": false,
+          "entry_face_id": "F0008",
+          "edge_distance_mm": 8.3,
+          "warnings": []
+        },
+        {
+          "id": "H003",
+          "axis": {
+            "origin": {
+              "x": 20.0,
+              "y": -20.0,
+              "z": 2.5
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -1.0
+            }
+          },
+          "diameter_mm": 3.4,
+          "depth_mm": 5.0,
+          "is_through": true,
+          "entry_type": "plain",
+          "counterbore_diameter_mm": null,
+          "counterbore_depth_mm": null,
+          "countersink_diameter_mm": null,
+          "countersink_angle_deg": null,
+          "bottom_type": "through",
+          "segments": [
+            {
+              "kind": "cylinder",
+              "diameter_mm": 3.4,
+              "diameter_small_mm": null,
+              "cone_angle_deg": null,
+              "start_depth_mm": 0.0,
+              "end_depth_mm": 5.0,
+              "face_ids": [
+                "F0003"
+              ]
+            }
+          ],
+          "standard_matches": [
+            {
+              "confidence": 1.0,
+              "evidence": "Ø3.40 vs ISO 273 medium Ø3.40 for M3 (dev +0.00 mm)",
+              "standard": "ISO 273 medium",
+              "designation": "M3",
+              "fit": "clearance_normal",
+              "nominal_diameter_mm": 3.4,
+              "deviation_mm": 0.0
+            },
+            {
+              "confidence": 0.6667,
+              "evidence": "Ø3.40 vs UNC tap drill Ø3.45 for #8-32 (dev -0.05 mm)",
+              "standard": "UNC tap drill",
+              "designation": "#8-32",
+              "fit": "tap_drill",
+              "nominal_diameter_mm": 3.45,
+              "deviation_mm": -0.05
+            },
+            {
+              "confidence": 0.3333,
+              "evidence": "Ø3.40 vs ISO 2306 tap drill Ø3.30 for M4 (dev +0.10 mm)",
+              "standard": "ISO 2306 tap drill",
+              "designation": "M4",
+              "fit": "tap_drill",
+              "nominal_diameter_mm": 3.3,
+              "deviation_mm": 0.1
+            }
+          ],
+          "likely_threaded": false,
+          "entry_face_id": "F0008",
+          "edge_distance_mm": 8.3,
+          "warnings": []
+        },
+        {
+          "id": "H004",
+          "axis": {
+            "origin": {
+              "x": 20.0,
+              "y": 20.0,
+              "z": 2.5
+            },
+            "direction": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -1.0
+            }
+          },
+          "diameter_mm": 3.4,
+          "depth_mm": 5.0,
+          "is_through": true,
+          "entry_type": "plain",
+          "counterbore_diameter_mm": null,
+          "counterbore_depth_mm": null,
+          "countersink_diameter_mm": null,
+          "countersink_angle_deg": null,
+          "bottom_type": "through",
+          "segments": [
+            {
+              "kind": "cylinder",
+              "diameter_mm": 3.4,
+              "diameter_small_mm": null,
+              "cone_angle_deg": null,
+              "start_depth_mm": 0.0,
+              "end_depth_mm": 5.0,
+              "face_ids": [
+                "F0004"
+              ]
+            }
+          ],
+          "standard_matches": [
+            {
+              "confidence": 1.0,
+              "evidence": "Ø3.40 vs ISO 273 medium Ø3.40 for M3 (dev +0.00 mm)",
+              "standard": "ISO 273 medium",
+              "designation": "M3",
+              "fit": "clearance_normal",
+              "nominal_diameter_mm": 3.4,
+              "deviation_mm": 0.0
+            },
+            {
+              "confidence": 0.6667,
+              "evidence": "Ø3.40 vs UNC tap drill Ø3.45 for #8-32 (dev -0.05 mm)",
+              "standard": "UNC tap drill",
+              "designation": "#8-32",
+              "fit": "tap_drill",
+              "nominal_diameter_mm": 3.45,
+              "deviation_mm": -0.05
+            },
+            {
+              "confidence": 0.3333,
+              "evidence": "Ø3.40 vs ISO 2306 tap drill Ø3.30 for M4 (dev +0.10 mm)",
+              "standard": "ISO 2306 tap drill",
+              "designation": "M4",
+              "fit": "tap_drill",
+              "nominal_diameter_mm": 3.3,
+              "deviation_mm": 0.1
+            }
+          ],
+          "likely_threaded": false,
+          "entry_face_id": "F0008",
+          "edge_distance_mm": 8.3,
+          "warnings": []
+        }
+      ],
+      "hole_patterns": [
+        {
+          "id": "P001",
+          "kind": "rectangular_grid",
+          "hole_ids": [
+            "H001",
+            "H002",
+            "H003",
+            "H004"
+          ],
+          "count": 4,
+          "diameter_mm": 3.4,
+          "normal": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0
+          },
+          "pitch_mm": null,
+          "grid_rows": 2,
+          "grid_cols": 2,
+          "row_pitch_mm": 40.0,
+          "col_pitch_mm": 40.0,
+          "center": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 2.5
+          },
+          "pitch_circle_diameter_mm": null,
+          "angular_pitch_deg": null,
+          "description": "4 × Ø3.4 THRU, rectangular 40.0 × 40.0 (2 × 2)"
+        }
+      ],
+      "fillets": [],
+      "chamfers": [],
+      "bosses": [],
+      "slots": [],
+      "pockets": [],
+      "cutouts": [],
+      "cutout_patterns": [],
+      "semantic_tags": [
+        {
+          "confidence": 0.9,
+          "evidence": "4 × Ø3.4 THRU, rectangular 40.0 × 40.0 (2 × 2); Ø3.40 vs ISO 273 medium Ø3.40 for M3 (dev +0.00 mm)",
+          "kind": "fastener_hole_pattern",
+          "label": "4 × M3 clearance normal holes (Ø3.4 THRU)",
+          "knowledge_id": null,
+          "feature_ids": [
+            "P001",
+            "H001",
+            "H002",
+            "H003",
+            "H004"
+          ]
+        }
+      ],
+      "likely_purchased_hardware": false,
+      "hardware_guess": null,
+      "color_rgb": null,
+      "min_wall_thickness_mm": 5.0,
+      "images": [],
+      "warnings": [],
+      "understanding": {
+        "aag": {
+          "nodes": 10,
+          "edges": 20,
+          "edge_types": {
+            "convex": 20,
+            "concave": 0,
+            "smooth": 0
+          },
+          "base_body": "plate 60.0 x 60.0 x 5.0 mm"
+        },
+        "structural_features": [],
+        "symmetry": {
+          "mirror_planes": [
+            {
+              "point": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "normal": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+              },
+              "max_dev_mm": 0.0
+            },
+            {
+              "point": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "normal": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "max_dev_mm": 0.004
+            },
+            {
+              "point": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "normal": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+              },
+              "max_dev_mm": 0.0
+            }
+          ],
+          "rotational": [
+            {
+              "axis": {
+                "origin": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "direction": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 1.0
+                }
+              },
+              "fold": 4,
+              "max_dev_mm": 0.0029
+            },
+            {
+              "axis": {
+                "origin": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "direction": {
+                  "x": 0.0,
+                  "y": 1.0,
+                  "z": 0.0
+                }
+              },
+              "fold": 2,
+              "max_dev_mm": 0.004
+            },
+            {
+              "axis": {
+                "origin": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "direction": {
+                  "x": 1.0,
+                  "y": 0.0,
+                  "z": 0.0
+                }
+              },
+              "fold": 2,
+              "max_dev_mm": 0.0
+            }
+          ],
+          "description": "symmetric: 3 mirror plane(s) and 4-fold rotational symmetry"
+        },
+        "process": {
+          "ranked": [
+            {
+              "label": "laser_or_waterjet",
+              "confidence": 0.636,
+              "evidence": [
+                {
+                  "code": "signal:profile_extrusion",
+                  "refs": [
+                    "F0007"
+                  ],
+                  "weight": 3.0,
+                  "text": "every face is one of two parallel caps or a wall perpendicular to them (an extruded 2D profile)"
+                },
+                {
+                  "code": "signal:plate_shape",
+                  "refs": [],
+                  "weight": 0.5,
+                  "text": "classified as a flat plate"
+                }
+              ]
+            },
+            {
+              "label": "cnc_milled",
+              "confidence": 0.333,
+              "evidence": [
+                {
+                  "code": "signal:tool_accessible",
+                  "refs": [],
+                  "weight": 1.0,
+                  "text": "all features reachable from 1 direction(s)"
+                }
+              ]
+            }
+          ],
+          "source": "inferred"
+        },
+        "roles": [
+          {
+            "label": "base_plate",
+            "confidence": 0.167,
+            "evidence": [
+              {
+                "code": "shape_class:plate",
+                "refs": [
+                  "PRT001"
+                ],
+                "weight": 0.4,
+                "text": "shape classified as plate (0.90)"
+              }
+            ]
+          },
+          {
+            "label": "electronics_plate",
+            "confidence": 0.091,
+            "evidence": [
+              {
+                "code": "shape_class:plate",
+                "refs": [
+                  "PRT001"
+                ],
+                "weight": 0.2,
+                "text": "shape classified as plate (0.90)"
+              }
+            ]
+          },
+          {
+            "label": "generic_bracket",
+            "confidence": 0.091,
+            "evidence": [
+              {
+                "code": "shape_class:plate",
+                "refs": [
+                  "PRT001"
+                ],
+                "weight": 0.2,
+                "text": "shape classified as plate (0.90)"
+              }
+            ]
+          }
+        ],
+        "mirror_of_part_id": null
+      }
+    }
+  ],
+  "assembly": null,
+  "understanding": {
+    "kinematics": {
+      "links": [
+        {
+          "id": "L0",
+          "instance_ids": [
+            "PRT001"
+          ],
+          "is_ground": true,
+          "ground_evidence": [],
+          "mass_g": 48.1097,
+          "description": "plate_4xM3 (single part)"
+        }
+      ],
+      "joints": [],
+      "mechanisms": [],
+      "dof": 0,
+      "topology": "static",
+      "floating_groups": [],
+      "description": "a single rigid part: no joints",
+      "mermaid": "flowchart LR\n  L0[\"L0 Ground: plate_4xM3\"]"
+    },
+    "load_paths": [],
+    "weak_spots": [],
+    "stability": null,
+    "subassembly_roles": [],
+    "questions": [
+      {
+        "id": "Q2D42E4",
+        "kind": "purpose",
+        "priority": 1,
+        "text": "What is this design for? (one sentence)",
+        "refs": [],
+        "why": "The purpose decides the role of every part and what counts as a risk.",
+        "answer_type": "text",
+        "options": null,
+        "unit": null,
+        "default_guess": null,
+        "image": null,
+        "applies_to": [
+          "roles",
+          "summary"
+        ]
+      },
+      {
+        "id": "QCB6F41",
+        "kind": "process",
+        "priority": 2,
+        "text": "How are the fabricated parts made? 1 of 1 look laser or waterjet but I am not sure.",
+        "refs": [
+          "PRT001"
+        ],
+        "why": "The process sets the minimum wall thickness, hole edge distances and corner advice.",
+        "answer_type": "single_choice",
+        "options": [
+          {
+            "value": "fdm_3d_printed",
+            "label": "3D printed (FDM)"
+          },
+          {
+            "value": "sla_or_sls_printed",
+            "label": "3D printed (resin or powder)"
+          },
+          {
+            "value": "cnc_milled",
+            "label": "CNC milled"
+          },
+          {
+            "value": "cnc_turned",
+            "label": "CNC turned (lathe)"
+          },
+          {
+            "value": "sheet_metal",
+            "label": "sheet metal (bent)"
+          },
+          {
+            "value": "laser_or_waterjet",
+            "label": "laser or waterjet cut"
+          },
+          {
+            "value": "injection_molded",
+            "label": "injection molded"
+          }
+        ],
+        "unit": null,
+        "default_guess": "laser_or_waterjet",
+        "image": null,
+        "applies_to": [
+          "process",
+          "weak_spots",
+          "summary"
+        ]
+      },
+      {
+        "id": "QC47C70",
+        "kind": "choose_role",
+        "priority": 3,
+        "text": "Is PRT001 (plate_4xM3) a base plate or a electronics plate?",
+        "refs": [
+          "PRT001"
+        ],
+        "why": "Its role is ambiguous; the answer sharpens the roles of the parts connected to it.",
+        "answer_type": "single_choice",
+        "options": [
+          {
+            "value": "base_plate",
+            "label": "base plate"
+          },
+          {
+            "value": "electronics_plate",
+            "label": "electronics plate"
+          },
+          {
+            "value": "generic_bracket",
+            "label": "generic bracket"
+          }
+        ],
+        "unit": null,
+        "default_guess": "base_plate",
+        "image": null,
+        "applies_to": [
+          "roles",
+          "summary"
+        ]
+      },
+      {
+        "id": "QF35BD6",
+        "kind": "load",
+        "priority": 4,
+        "text": "What loads should it carry? (forces, torques, payload, speeds)",
+        "refs": [],
+        "why": "Loads decide whether the weak spots matter.",
+        "answer_type": "text",
+        "options": null,
+        "unit": null,
+        "default_guess": null,
+        "image": null,
+        "applies_to": [
+          "weak_spots"
+        ]
+      },
+      {
+        "id": "Q954086",
+        "kind": "environment",
+        "priority": 5,
+        "text": "Where will it be used? (indoor, outdoor, dust, water, temperature)",
+        "refs": [],
+        "why": "The environment changes the material and the process.",
+        "answer_type": "text",
+        "options": null,
+        "unit": null,
+        "default_guess": null,
+        "image": null,
+        "applies_to": [
+          "summary"
+        ]
+      }
+    ],
+    "conflicts": [],
+    "answers": [],
+    "summary": "Likely a single plate (60.0 x 60.0 x 5.0 mm), 4 hole(s), probably a base plate. It looks laser or waterjet (confidence 0.64)."
+  },
+  "warnings": [],
+  "errors": []
+}

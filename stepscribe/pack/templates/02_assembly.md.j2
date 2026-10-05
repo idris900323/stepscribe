@@ -1,0 +1,65 @@
+# Assembly
+
+{% if not a.has_assembly %}
+This file contains a single part, so there are no assembly relationships.
+{% else %}
+## Subassemblies
+{% for s in a.subassemblies %}
+- {{ s }}
+{% else %}
+- none
+{% endfor %}
+
+## Bill of materials
+{% for b in a.bom %}
+- {{ b }}
+{% endfor %}
+
+## Relations
+{% for r in a.relations %}
+- {{ r }}
+{% else %}
+- none found
+{% endfor %}
+
+## Fastener joints
+{% for j in a.joints %}
+- {{ j }}
+{% else %}
+- none found
+{% endfor %}
+
+## Fastener shopping list
+{% for s in a.shopping %}
+- {{ s }}
+{% else %}
+- none
+{% endfor %}
+
+## Spatial facts
+{% for s in a.spatial %}
+- {{ s }}
+{% else %}
+- none
+{% endfor %}
+{% if a.placements %}
+
+## Placement of every part (world coordinates, mm)
+{% for s in a.placements %}
+- {{ s }}
+{% endfor %}
+{% endif %}
+{% if a.interferences %}
+
+## Interferences
+{% for i in a.interferences %}
+- {{ i }}
+{% endfor %}
+{% endif %}
+{% endif %}
+
+## Part summaries
+{% for pid, text in level1.items() %}
+{{ text }}
+
+{% endfor %}

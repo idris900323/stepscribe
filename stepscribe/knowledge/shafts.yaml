@@ -1,0 +1,16 @@
+# Standard shaft diameters. Rule 8: every entry has a `source`.
+# Metric: preferred diameters of ISO 775 (cylindrical shaft ends) and ISO 286 / ISO 497 series.
+# Inch: nominal fractions of an inch (exact by definition, 1 in = 25.4 mm, ASME B4.2 / ANSI B17.1).
+kind: shaft
+entries:
+  "3":     {diameter_mm: 3.0, label: "Ø3", source: "ISO 497 preferred diameters"}
+  "4":     {diameter_mm: 4.0, label: "Ø4", source: "ISO 497 preferred diameters"}
+  "5":     {diameter_mm: 5.0, label: "Ø5", source: "ISO 497 preferred diameters"}
+  "6":     {diameter_mm: 6.0, label: "Ø6", source: "ISO 497 preferred diameters"}
+  "8":     {diameter_mm: 8.0, label: "Ø8", source: "ISO 497 preferred diameters"}
+  "10":    {diameter_mm: 10.0, label: "Ø10", source: "ISO 497 preferred diameters"}
+  "12":    {diameter_mm: 12.0, label: "Ø12", source: "ISO 497 preferred diameters"}
+  "1/8in": {diameter_mm: 3.175, label: "Ø1/8 in", source: "inch fraction, 1 in = 25.4 mm (ASME B4.2)"}
+  "1/4in": {diameter_mm: 6.35, label: "Ø1/4 in", source: "inch fraction, 1 in = 25.4 mm (ASME B4.2)"}
+  "3/8in": {diameter_mm: 9.525, label: "Ø3/8 in", source: "inch fraction, 1 in = 25.4 mm (ASME B4.2)"}
+  "1/2in": {diameter_mm: 12.7, label: "Ø1/2 in", source: "inch fraction, 1 in = 25.4 mm (ASME B4.2)"}

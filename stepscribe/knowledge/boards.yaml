@@ -1,0 +1,17 @@
+# Single-board computer mounting hole patterns. Rule 8: every entry has a `source`.
+# spacing_mm = [long, short] rectangular hole spacing; screw = designation in screws_iso_metric.yaml.
+# TODO: verify Arduino Uno / Mega (irregular, non-rectangular hole positions) from the official
+#   Arduino mechanical drawings before adding; they do not fit a rectangular-pattern matcher yet.
+# TODO: verify ESP32 dev boards (every vendor differs); hobby servo mounting tabs (per model).
+kind: board_mount
+entries:
+  rpi_3_4_5:
+    label: Raspberry Pi 3 / 4 / 5 (58 × 49 mm)
+    spacing_mm: [58.0, 49.0]
+    screw: M2.5
+    source: "Raspberry Pi 4 Model B / Raspberry Pi 5 mechanical drawings (raspberrypi.com product briefs)"
+  rpi_zero:
+    label: Raspberry Pi Zero (58 × 23 mm)
+    spacing_mm: [58.0, 23.0]
+    screw: M2.5
+    source: "Raspberry Pi Zero mechanical drawing (raspberrypi.com)"

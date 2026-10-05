@@ -1,0 +1,6 @@
+# One role whose name settles it: an M5 standoff is a spacer. The other parts of this file are
+# not labelled because their purpose is not clear from the geometry alone.
+file: SmallRobotArm/AxisTot1 v14.step
+
+roles:
+  M5standoff: [spacer_standoff, fastener]

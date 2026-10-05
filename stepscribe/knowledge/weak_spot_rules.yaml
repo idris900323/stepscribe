@@ -1,0 +1,57 @@
+# Thresholds for the rule-based weak spots. All tunable numbers
+# live here. They are engineering rules of thumb chosen by the maintainers; none is a sourced
+# standard value, so each says so (TODO: verify against a published guideline before relying on it).
+
+edge_distance:
+  metal_factor: 1.5       # hole edge distance below this x diameter is flagged
+  fdm_factor: 2.0         # printed plastic needs more material around a hole
+  open_edge_mm: 0.1       # edge distance below this means the hole is open to the edge (slot, notch)
+  max_hole_diameter_mm: 10.0   # larger bores are structural openings, not fastener holes
+  source: "rule of thumb; TODO: verify"
+
+cutout_web:
+  # A bridge of material between two openings, or between an opening and the outline, thinner than
+  # the larger of (a) the sourced minimum wall of the inferred process (process_rules.yaml min_wall_mm)
+  # and (b) the plate thickness x thickness_factor is flagged.
+  thickness_factor: 1.0   # rule of thumb for cut plate (laser / waterjet / printed): web at least the thickness
+  open_edge_mm: 0.1       # below this the opening reaches the edge: a notch, not a thin web
+  source: "thin bridges; the thickness factor is a rule of thumb, TODO: verify"
+
+cantilever:
+  min_ratio: 4.0          # overhang / support width above this is a cantilever
+  source: "rule of thumb; TODO: verify"
+
+unsupported_span:
+  max_span_over_thickness: 50.0
+  source: "rule of thumb; TODO: verify"
+
+load_path:
+  source: "heuristic ranking proxies chosen for this tool, not a standard; only the order of connections matters"
+  load_mass_min_fraction: 0.05      # a part carrying more than 5% of the total mass is a load source
+  strength:                         # unit-less proxies used only to rank connections
+    fastener_per_unit_d2: 100.0     # per fastener: 100 x (diameter / 3 mm)^2
+    bearing_or_joint: 80.0
+    press_or_body: 60.0
+    planar_rest_per_mm2: 0.05       # contact area / 20, capped
+    planar_rest_cap: 30.0
+
+joint_play:
+  source: "rule of thumb; TODO: verify"
+  arm_over_bearing_width: 3.0       # child centre of mass farther than this x bearing width, one bearing
+
+stability:
+  source: "tip over below 15 degrees is flagged; thresholds are choices, not standards"
+  tipping_warn_deg: 15.0            # below this is flagged
+  tipping_high_deg: 8.0
+  support_tolerance_mm: 0.5         # parts this close to the lowest plane are support points
+
+short_screw:
+  source: "nut heights from ISO 4032 via screws_iso_metric.yaml; engagement of 1.5 x diameter is a rule of thumb; TODO: verify"
+  engagement_diameters: 1.5         # threaded engagement in a tapped hole, x diameter
+  # nut height per size comes from screws_iso_metric.yaml (nut_m, ISO 4032)
+  standard_lengths_mm: [4, 5, 6, 8, 10, 12, 14, 16, 20, 25, 30, 35, 40, 45, 50, 60]
+  lengths_source: "preferred lengths of ISO 4762 socket head cap screws (ISO 4762 / ISO 888); TODO: verify the list"
+
+interference:
+  small_mm3: 30.0   # overlaps below this volume are reported as low severity
+  source: "heuristic: separates tolerance-sized overlaps from real collisions; TODO: verify on real assemblies"

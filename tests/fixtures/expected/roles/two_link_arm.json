@@ -1,0 +1,23 @@
+{
+  "ArmLink1": [
+    "arm_link"
+  ],
+  "ArmLink2": [
+    "arm_link",
+    "end_effector"
+  ],
+  "Base": [
+    "base_plate",
+    "chassis_frame",
+    "bearing_housing"
+  ],
+  "Bearing608": [
+    "bearing"
+  ],
+  "ShaftA": [
+    "shaft_axle"
+  ],
+  "ShaftB": [
+    "shaft_axle"
+  ]
+}

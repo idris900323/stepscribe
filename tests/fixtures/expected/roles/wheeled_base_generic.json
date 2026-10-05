@@ -1,0 +1,14 @@
+{
+  "Part1": [
+    "chassis_frame"
+  ],
+  "Part2": [
+    "bearing"
+  ],
+  "Part3": [
+    "shaft_axle"
+  ],
+  "Part4": [
+    "wheel"
+  ]
+}

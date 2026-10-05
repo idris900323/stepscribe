@@ -1,0 +1,66 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "stepscribe-cad"
+dynamic = ["version"]
+description = "Turn STEP files into an LLM Context Pack: exact measurements, features and assembly facts in plain text."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
+authors = [{ name = "idris sadiq" }]
+classifiers = ["License :: OSI Approved :: GNU Affero General Public License v3"]
+dependencies = [
+    "cadquery-ocp>=7.7",
+    "pydantic>=2",
+    "typer>=0.12",
+    "rich",
+    "jinja2",
+    "numpy",
+    "pyyaml",
+    "pillow",
+    "vtk",
+]
+
+[project.urls]
+Repository = "https://github.com/idris900323/stepscribe"
+
+[project.optional-dependencies]
+dev = ["build", "build123d", "pytest", "pytest-cov", "ruff", "mypy", "types-PyYAML"]
+mcp = ["mcp>=2"]
+llm = ["httpx"]
+
+[project.scripts]
+stepscribe = "stepscribe.cli:app"
+
+[tool.hatch.version]
+path = "stepscribe/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["stepscribe"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["robot_steps", ".venv", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.mypy]
+strict = true
+files = ["stepscribe"]
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["OCP.*", "vtk.*"]
+ignore_missing_imports = true
+follow_imports = "skip"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore:Setting the shape on a NumPy array:DeprecationWarning"]

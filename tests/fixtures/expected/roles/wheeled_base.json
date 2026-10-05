@@ -1,0 +1,14 @@
+{
+  "Axle": [
+    "shaft_axle"
+  ],
+  "Bearing608": [
+    "bearing"
+  ],
+  "Chassis": [
+    "chassis_frame"
+  ],
+  "Wheel": [
+    "wheel"
+  ]
+}

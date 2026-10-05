@@ -1,0 +1,23 @@
+{
+  "Part1": [
+    "base_plate",
+    "chassis_frame",
+    "bearing_housing"
+  ],
+  "Part2": [
+    "bearing"
+  ],
+  "Part3": [
+    "shaft_axle"
+  ],
+  "Part4": [
+    "shaft_axle"
+  ],
+  "Part5": [
+    "arm_link"
+  ],
+  "Part6": [
+    "arm_link",
+    "end_effector"
+  ]
+}

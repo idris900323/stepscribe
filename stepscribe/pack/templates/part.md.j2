@@ -1,0 +1,118 @@
+# {{ c.part.id }} {{ c.part.name }}
+
+- Source file: {{ c.part.source_file }}
+- Size (oriented bounding box): {{ c.size }}
+- Axis-aligned size: {{ '%.1f'|format(c.part.bbox.size.x) }} × {{ '%.1f'|format(c.part.bbox.size.y) }} × {{ '%.1f'|format(c.part.bbox.size.z) }} mm
+- Volume: {{ '%.1f'|format(c.part.mass.volume_mm3) }} mm³; surface area: {{ '%.1f'|format(c.part.mass.surface_area_mm2) }} mm²
+- Mass: {{ c.mass }}
+- Valid closed solid: {{ 'yes' if c.part.is_valid_solid else 'no' }}
+- Topology: {{ c.part.topology.faces }} faces, {{ c.part.topology.edges }} edges ({% for k, v in c.part.topology.face_types.items() %}{{ k }} {{ v }}{{ ', ' if not loop.last }}{% endfor %})
+- Shape class: {{ c.shape_inference }}
+{% if c.thickness %}
+- Thickness: {{ c.thickness }} mm
+{% endif %}
+{% if c.wall %}
+- Minimum wall thickness (sampled estimate): {{ c.wall }} mm
+{% endif %}
+{% if c.tags %}
+
+## Recognised standards and features
+{% for t in c.tags %}
+- {{ t }}
+{% endfor %}
+{% endif %}
+
+## Holes
+{% if c.holes %}
+| ID | Ø | Depth | Entry | Bottom | Position (x, y, z) | Direction | Edge distance | Likely standard |
+|---|---|---|---|---|---|---|---|---|
+{% for h in c.holes %}
+| {{ h.id }} | {{ h.dia }} | {{ h.depth }} | {{ h.entry }} | {{ h.bottom }} | {{ h.position }} | {{ h.direction }} | {{ h.edge }} | {{ h.standard }}{{ '; ' + h.threaded if h.threaded else '' }} |
+{% endfor %}
+{% else %}
+No holes found.
+{% endif %}
+{% if c.patterns %}
+
+## Hole patterns
+{% for p in c.patterns %}
+- {{ p }}
+{% endfor %}
+{% endif %}
+{% if c.cutouts %}
+
+## Cutouts, recesses and notches
+Levels run from the entry face inward. Ordinates (u, v) are measured from the lowest-u, lowest-v corner of the host outline, the same origin as the Reconstruction section.
+
+| ID | Kind | Levels (shape, size, corner radius, depth, centre) | Total depth | Edge distance | Host and faces | Also detected as |
+|---|---|---|---|---|---|---|
+{% for k in c.cutouts %}
+| {{ k.id }} | {{ k.kind }} | {{ k.levels }} | {{ k.depth }} | {{ k.edge }} | {{ k.faces }} | {{ k.also }}{{ '; ' + k.note if k.note else '' }} |
+{% endfor %}
+{% if c.cutout_patterns %}
+
+Cut-out patterns:
+{% for p in c.cutout_patterns %}
+- {{ p }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if c.slots %}
+
+## Slots
+{% for s in c.slots %}
+- {{ s }}
+{% endfor %}
+{% endif %}
+{% if c.pockets %}
+
+## Pockets
+{% for s in c.pockets %}
+- {{ s }}
+{% endfor %}
+{% endif %}
+{% if c.bosses %}
+
+## Bosses
+{% for s in c.bosses %}
+- {{ s }}
+{% endfor %}
+{% endif %}
+{% if c.fillets or c.chamfers %}
+
+## Fillets and chamfers
+{% if c.fillets %}
+- Fillets (radius, mm): {{ c.fillets | join(', ') }}
+{% endif %}
+{% if c.chamfers %}
+- Chamfers (distance, mm): {{ c.chamfers | join(', ') }}
+{% endif %}
+{% endif %}
+{% if c.recon %}
+
+## Reconstruction (measured build recipe, part's own coordinates, mm)
+{% for r in c.recon %}
+- {{ r }}
+{% endfor %}
+{% endif %}
+{% if c.relations %}
+
+## Relations
+{% for r in c.relations %}
+- {{ r }}
+{% endfor %}
+{% endif %}
+{% if c.images %}
+
+## Images
+{% for i in c.images %}
+- {{ i }}
+{% endfor %}
+{% endif %}
+{% if c.warnings %}
+
+## Warnings
+{% for w in c.warnings %}
+- {{ w }}
+{% endfor %}
+{% endif %}

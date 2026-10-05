@@ -1,0 +1,31 @@
+# Stepper motor mounting patterns. Rule 8: every entry has a `source`.
+# spacing_mm = square bolt-hole spacing; pilot_diameter_mm = centring boss ("pilot") diameter, the
+# mating plate needs a bore of at least this size; screw = fastener designation in screws_iso_metric.yaml.
+# TODO: verify NEMA 8 (hole spacing 15.4 mm, pilot 15 mm per some datasheets) before adding it.
+# TODO: verify DC / servo motors (e.g. 775, N20, 3-pin hobby servos) from manufacturer drawings.
+kind: motor_mount
+entries:
+  nema11:
+    label: NEMA 11
+    spacing_mm: 23.0
+    pilot_diameter_mm: 22.0
+    screw: M2.5
+    source: "NEMA ICS 16 frame size 11 (28 mm face); manufacturer datasheets (e.g. Nanotec, StepperOnline 11HS)"
+  nema14:
+    label: NEMA 14
+    spacing_mm: 26.0
+    pilot_diameter_mm: 22.0
+    screw: M3
+    source: "NEMA ICS 16 frame size 14 (35 mm face); manufacturer datasheets (e.g. StepperOnline 14HS)"
+  nema17:
+    label: NEMA 17
+    spacing_mm: 31.0
+    pilot_diameter_mm: 22.0
+    screw: M3
+    source: "NEMA ICS 16 frame size 17 (42 mm face); manufacturer datasheets (e.g. StepperOnline 17HS, Pololu 1200)"
+  nema23:
+    label: NEMA 23
+    spacing_mm: 47.14
+    pilot_diameter_mm: 38.1
+    screw: M5
+    source: "NEMA ICS 16 frame size 23 (57 mm face); manufacturer datasheets (e.g. StepperOnline 23HS)"

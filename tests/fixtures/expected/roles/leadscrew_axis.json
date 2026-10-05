@@ -1,0 +1,19 @@
+{
+  "Carriage": [
+    "linear_carriage"
+  ],
+  "EndPlate": [
+    "base_plate",
+    "chassis_frame",
+    "generic_bracket"
+  ],
+  "LM8UU": [
+    "linear_bearing"
+  ],
+  "Rod": [
+    "rail_or_guide_rod"
+  ],
+  "T8x8_Leadscrew": [
+    "lead_screw"
+  ]
+}

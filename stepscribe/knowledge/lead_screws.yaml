@@ -1,0 +1,10 @@
+# Lead screw data. Rule 8: sourced.
+kind: lead_screws
+keywords: [leadscrew, lead_screw, lead screw, trapezoidal, acme, "t8", "tr8"]
+screws:
+  T8:
+    diameter_mm: 8.0
+    pitch_mm: 2.0
+    common_leads_mm: [2.0, 4.0, 8.0]   # 1, 2 and 4 starts x 2 mm pitch
+    source: "https://3dprintingcanada.com/products/300mm-lead-screw-8mm-diameter (T8: 8 mm diameter, 2 mm pitch; 2-start = 4 mm lead, 4-start = 8 mm lead)"
+default_lead_confidence: 0.4   # when the lead cannot be read from the name

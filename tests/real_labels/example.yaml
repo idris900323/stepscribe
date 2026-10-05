@@ -1,0 +1,15 @@
+# One label file per real STEP file (the STEP files themselves stay outside the repo).
+# Copy this file, rename it, and describe what is true about the robot. See
+# stepscribe/understanding/evaluate.py for how each part is scored.
+file: SO_5DOF_ARM100_Assembly.step     # relative to the STEP folder given to the script
+
+joints:                                # what moves (type: revolute | prismatic | cylindrical)
+  - {type: revolute, axis: [0, 0, 1], point: [0, 0, 40]}    # point is optional (any point on the axis)
+
+mechanisms:                            # kind: direct_drive | gear_pair | belt_drive | lead_screw | linkage_loop
+  - {kind: direct_drive}
+
+roles:                                 # part name -> accepted top roles
+  Base_08q: [base_plate, chassis_frame]
+
+weak_spots: []                         # categories that should be raised, e.g. [tipping, single_fastener]

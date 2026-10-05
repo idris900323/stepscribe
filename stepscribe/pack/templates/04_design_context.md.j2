@@ -1,0 +1,28 @@
+# Design context (supplied by the user)
+
+This section is the designer's stated intent. It is not measured from the geometry.
+
+{% for key, value in ctx.items() if key != 'answers' %}
+## {{ key | replace('_', ' ') | capitalize }}
+{% if value is mapping %}
+{% for k, v in value.items() %}
+- {{ k }}: {{ v }}
+{% endfor %}
+{% elif value is iterable and value is not string %}
+{% for v in value %}
+- {{ v }}
+{% endfor %}
+{% else %}
+{{ value }}
+{% endif %}
+
+{% endfor %}
+{% if qa %}
+## Questions the designer answered
+
+What the designer said, exactly. "Designer unsure" answers are soft facts; skipped questions were not answered.
+
+{% for row in qa %}
+- {{ row }}
+{% endfor %}
+{% endif %}

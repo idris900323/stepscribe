@@ -1,0 +1,19 @@
+{
+  "Coupler": [
+    "arm_link"
+  ],
+  "Crank": [
+    "arm_link"
+  ],
+  "Ground": [
+    "base_plate",
+    "chassis_frame",
+    "generic_bracket"
+  ],
+  "Pin": [
+    "shaft_axle"
+  ],
+  "Rocker": [
+    "arm_link"
+  ]
+}

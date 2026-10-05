@@ -1,0 +1,38 @@
+# Hand-written labels for the open-source SO-ARM100 5-DOF follower arm (STS3215 servos,
+# 3D-printed links; public design). Written from the design, not from stepscribe's output.
+# Only what is certain is labelled: the vertical pan axis, the three parallel flex axes
+# (shoulder lift, elbow, wrist flex) and the part roles. The wrist-roll and gripper axes are
+# left out because their direction in this file was not independently checked.
+file: SO-ARM100/SO_5DOF_ARM100_Assembly.step
+
+joints:
+  - {type: revolute, axis: [0, 1, 0]}      # shoulder pan: vertical axis through the base servo
+  - {type: revolute, axis: [1, 0, 0]}      # shoulder lift
+  - {type: revolute, axis: [1, 0, 0]}      # elbow
+  - {type: revolute, axis: [1, 0, 0]}      # wrist flex
+
+mechanisms:                                # every joint is turned by its own servo
+  - {kind: direct_drive}
+  - {kind: direct_drive}
+  - {kind: direct_drive}
+  - {kind: direct_drive}
+  - {kind: direct_drive}
+  - {kind: direct_drive}
+
+roles:
+  Base_08q_body1: [base_plate, chassis_frame]
+  Base_08q_body2: [base_plate, chassis_frame]
+  Base_08q_body3: [base_plate, chassis_frame]
+  STS3215_03a: [motor]
+  STS3215_03a_Wrist_Roll: [motor]
+  Moving_Jaw_08d: [gripper_finger, end_effector]
+  WaveShare_Mounting_Plate_01d: [electronics_plate]
+  Rotation_Pitch_08i: [joint_bracket, arm_link]
+  SO_ARM100_08k_116_Square: [arm_link]
+  SO_ARM100_08k_Mirror_body1: [arm_link, joint_bracket]
+  SO_ARM100_08k_Mirror_body2: [arm_link, joint_bracket]
+  SO_ARM100_08k_Asym_Mirror_Clip: [joint_bracket, generic_bracket]
+  Wrist_Roll_08c: [arm_link, joint_bracket]
+  Wrist_Roll_Pitch_08i: [arm_link, joint_bracket]
+
+weak_spots: []

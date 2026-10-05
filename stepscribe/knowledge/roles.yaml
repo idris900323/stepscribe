@@ -1,0 +1,151 @@
+# Roles, ground-link scoring and evidence weights.
+# Rule 3: tunable numbers and keyword lists live here. Rule 7: domain facts carry a source;
+# the weights below are heuristics (not domain data), each with a comment saying why.
+
+ground:
+  source: "heuristic weights chosen for this tool (not domain data); ground = lowest, largest, heaviest, named base"
+  # A link is scored by the sum of these terms; the highest score is the ground link.
+  name_keyword_weight: 2.0       # a part name contains a ground word (base, chassis, frame...)
+  lowest_plane_weight: 2.0       # contains an instance touching the lowest plane (w.r.t. up)
+  footprint_weight: 2.0          # share of the largest footprint (bounding box area normal to up)
+  mass_weight: 2.0               # share of the largest mass
+  lowest_plane_tolerance_mm: 1.0
+  keywords: [base, chassis, frame, stand, foundation, bracket_base, baseplate, base_plate, mount, body]
+
+kinematics:
+  source: "heuristic thresholds chosen for this tool (not domain data)"
+  coaxial_tol_mm: 0.1            # axes closer than this are the same axis
+  parallel_tol_deg: 2.0          # axes within this are parallel (merging duplicate joints)
+  loose_clearance_mm: 0.3        # diametral clearance above which a pin-in-hole is only "cylindrical"
+  confidence:
+    fastener_joint: 0.95
+    fastener_part: 0.85
+    bearing_outer: 0.85
+    bearing_inner: 0.9
+    linear_bearing: 0.8
+    press_fit: 0.6
+    clearance_pin: 0.6
+    loose_pin: 0.4
+    parallel_rods: 0.6
+  wheel:
+    min_wheels: 2
+    horizontal_axis_max_dot_with_up: 0.2
+    lowest_plane_tolerance_fraction: 0.03   # of the assembly height
+    disc_ratio: 0.35                         # width / diameter at most for a wheel-like disc
+
+# ---------------------------------------------------------------- part roles (U6)
+part_roles:
+  source: "heuristic weights chosen for this tool (not domain data); each is the evidence strength of one signal"
+  confidence_k: 2.0          # confidence = score / (score + K): more independent evidence, higher, never 1.0
+  name_only_cap: 0.6         # a role supported only by the part's name never exceeds this confidence
+  ambiguity_gap: 0.1         # top two roles closer than this are ambiguous (becomes a question)
+
+  vocabulary:                # the brief's list plus roles for purchased parts the brief left out
+    [chassis_frame, base_plate, motor_mount, bearing_housing, shaft_axle, wheel, hub, arm_link,
+     joint_bracket, end_effector, gripper_finger, cover_enclosure, spacer_standoff, electronics_plate,
+     battery_holder, sensor_mount, gear, pulley, belt_tensioner, linear_carriage, rail_or_guide_rod,
+     counterweight, cable_guide, fastener, generic_bracket, motor, bearing, linear_bearing, lead_screw,
+     unknown]
+
+  shape:                     # shape class -> {role: weight}
+    plate: {base_plate: 0.4, electronics_plate: 0.2, generic_bracket: 0.2}
+    disc: {wheel: 0.5, hub: 0.3}
+    ring: {hub: 0.3, spacer_standoff: 0.2}
+    shaft: {shaft_axle: 1.0, rail_or_guide_rod: 0.4}
+    tube: {spacer_standoff: 0.4, rail_or_guide_rod: 0.2}
+    bar: {arm_link: 0.3, rail_or_guide_rod: 0.2}
+    gear_like: {gear: 1.2, pulley: 0.6}
+    l_bracket: {generic_bracket: 0.7, joint_bracket: 0.2}
+    u_bracket: {generic_bracket: 0.7, joint_bracket: 0.2}
+    z_bracket: {generic_bracket: 0.7}
+    angle: {generic_bracket: 0.7}
+    housing: {cover_enclosure: 0.8, bearing_housing: 0.2}
+    extrusion_profile: {chassis_frame: 0.6}
+    sheet_metal: {generic_bracket: 0.4, cover_enclosure: 0.3}
+    fastener: {fastener: 2.0}
+    block: {generic_bracket: 0.2, bearing_housing: 0.1}
+
+  tag:                       # semantic tag kind -> {role: weight} (Phase 5)
+    motor_mount: {motor_mount: 1.5}
+    servo_mount: {motor_mount: 1.2}
+    bearing_seat: {bearing_housing: 1.5}
+    board_mount: {electronics_plate: 1.5}
+    shaft_bore: {hub: 0.6}
+    extrusion_profile: {chassis_frame: 1.0}
+    standoff: {spacer_standoff: 1.0}
+    belt_slot: {belt_tensioner: 0.6}
+
+  hardware:                  # purchased-hardware kind -> {role: weight}
+    fastener: {fastener: 2.5}
+    bearing: {bearing: 2.5}
+    linear_bearing: {linear_bearing: 2.5}
+    motor: {motor: 2.5}
+
+  kinematic:                 # evidence from the kinematic model
+    in_ground_link: {chassis_frame: 0.5, base_plate: 0.4}
+    carries_many_bearings: {chassis_frame: 1.0}
+    largest_in_ground_link: {chassis_frame: 0.5}
+    between_two_revolutes: {arm_link: 2.0}
+    link_mate_of_arm: {joint_bracket: 0.8}   # a smaller part riding in an arm link: a bracket or cover on it
+    carries_a_bearing: {bearing_housing: 0.8, joint_bracket: 0.4}
+    last_link_in_chain: {end_effector: 0.6}
+    gripper_pair: {gripper_finger: 1.2}
+    wheel_on_wheel_joint: {wheel: 2.0}
+    on_motor_shaft: {hub: 0.8}
+    prismatic_carriage: {linear_carriage: 1.5}
+    guide_rod: {rail_or_guide_rod: 1.5}
+    screw_axis: {lead_screw: 2.0}
+
+  neighbour:                 # evidence from touching parts
+    bolted_to_motor: {motor_mount: 1.0}
+    holds_bearing_and_shaft: {bearing_housing: 1.0}
+
+  mechanism:                 # evidence from mechanisms
+    gear: {gear: 2.0}
+    pulley: {pulley: 2.0}
+
+  position:
+    lowest_and_largest: {base_plate: 0.4, chassis_frame: 0.3}
+    topmost_on_tall_part: {sensor_mount: 0.2}
+
+  structure:
+    many_cutouts_and_fasteners: {chassis_frame: 0.5, base_plate: 0.3}
+
+  ml:
+    weight: 0.8            # a learned model's probability times this is added as evidence (no model by default)
+
+  name_weight: 1.5           # one name keyword hit adds this to each role it names
+  name_keywords:             # English words and common abbreviations (lower-case substrings)
+    chassis_frame: [chassis, frame]
+    base_plate: [base, baseplate, base_plate, bottom_plate, floor]
+    motor_mount: [motor_mount, motormount, motor mount, nema]
+    bearing_housing: [bearing_housing, housing, pillow, bearing_block]
+    shaft_axle: [shaft, axle, spindle]
+    wheel: [wheel, tire, tyre]
+    hub: [hub]
+    arm_link: [arm, link, upper_arm, forearm, shoulder, elbow]
+    joint_bracket: [joint, pivot, hinge, wrist]
+    end_effector: [gripper_base, end_effector, effector, tool]
+    gripper_finger: [finger, jaw, claw]
+    cover_enclosure: [cover, lid, case, enclosure, shell]
+    spacer_standoff: [spacer, standoff, stand_off]
+    electronics_plate: [pcb, board_mount, electronics, controller_plate, waveshare, "wave share"]  # Waveshare sells servo-driver boards
+    battery_holder: [battery, batt, lipo]
+    sensor_mount: [sensor, camera, lidar, ultrasonic]
+    gear: [gear, pinion, cog]
+    pulley: [pulley, sprocket_gt2, gt2]
+    belt_tensioner: [tensioner, idler]
+    linear_carriage: [carriage, slider, slide_block, trolley]
+    rail_or_guide_rod: [rail, guide_rod, linear_rod, smooth_rod]
+    counterweight: [counterweight, ballast]
+    cable_guide: [cable, wire_guide, cable_chain]
+    fastener: [screw, bolt, nut, washer]
+    generic_bracket: [bracket, mount, support]
+    motor: [motor, stepper, servo]
+    bearing: [bearing, "608", "6001"]
+    linear_bearing: [lm8uu, lm6uu, lm10uu, linear_bearing]
+    lead_screw: [leadscrew, lead_screw, lead screw, t8]
+
+subassembly_roles:
+  source: "heuristic rules chosen for this tool (not domain data)"
+  min_revolutes_for_arm: 2
