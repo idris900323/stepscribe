@@ -732,7 +732,7 @@ def design_summary(
             if hit:
                 sizes[hit.group(0)] += int(r["qty"])
         mostly = f", mostly {max(sizes, key=lambda k: sizes[k])}" if sizes else ""
-        sentences.append(f"{total} fasteners{mostly}")
+        sentences.append(f"{total} fastener pieces to buy (screws, nuts, washers){mostly}")
     sentences += _risk_sentence(spots)
     return ". ".join(sentences) + "."
 

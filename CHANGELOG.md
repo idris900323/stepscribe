@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2
+
+- The summary says "N fastener pieces to buy (screws, nuts, washers)" instead of "N fasteners", which read as a different count than the shopping list.
+- `export_pack` with `copy_to` also reports the path of the copied zip.
+- The answers file lock handles the Windows permission errors that appear while another writer deletes its lock or reads the file.
+
 ## 0.1.1
 
 - README starts with a step-by-step "Start here" (install, the browser page, the Claude Code commands and in what order, where the files end up).

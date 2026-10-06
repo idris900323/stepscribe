@@ -433,7 +433,10 @@ def export_pack(
     if result.dropped_images:
         lines.append("- Left out of the chat bundle: " + "; ".join(result.dropped_images))
     if copy_to:
-        lines.append(f"- Saved a copy in: {_copy_export(result, Path(copy_to))}")
+        copy = _copy_export(result, Path(copy_to))
+        lines.append(f"- Saved a copy in: {copy}")
+        if result.zip:
+            lines.append(f"- Zip copy: {copy.parent / Path(result.zip).name}")
     return "\n".join(lines) + "\n\n----- SMALL version -----\n\n" + result.small_text()
 
 

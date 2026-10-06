@@ -9,7 +9,7 @@
       "name": "stepscribe",
       "source": "./plugins/stepscribe",
       "description": "Analyse STEP files offline: measured facts, how the design moves, weak spots, and portable Markdown exports.",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "license": "AGPL-3.0-only",
       "keywords": ["cad", "step", "robotics", "mechanical", "design-review"]
     }
