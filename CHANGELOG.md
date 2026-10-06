@@ -2,6 +2,7 @@
 
 ## 0.1.2
 
+- The project is named **stepscribe-cad** everywhere public: the GitHub repository, the README title, the Claude Code marketplace and plugin (commands are `/stepscribe-cad:export`, `/stepscribe-cad:interview`, `/stepscribe-cad:review`). The command line tool is still `stepscribe` and the Python package is still `stepscribe`.
 - The summary says "N fastener pieces to buy (screws, nuts, washers)" instead of "N fasteners", which read as a different count than the shopping list.
 - `export_pack` with `copy_to` also reports the path of the copied zip.
 - The answers file lock handles the Windows permission errors that appear while another writer deletes its lock or reads the file.

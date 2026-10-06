@@ -1,8 +1,8 @@
-# stepscribe
+# stepscribe-cad
 
 Give any LLM X-ray vision into your CAD model. `stepscribe` reads a STEP file and writes an **LLM context pack**: exact measurements, holes, patterns, standard parts, assembly relationships and labelled images, all computed deterministically and offline (no AI model, no network).
 
-**[Download the 1-minute demo with sound](https://github.com/idris900323/stepscribe/raw/main/docs/media/stepscribe-demo.mp4)** (6 MB, MP4). No more screenshots and long explanations to get an AI to understand your model; the web page and the three Claude Code commands; made for beginner designers who want AI support.
+**[Download the 1-minute demo with sound](https://github.com/idris900323/stepscribe-cad/raw/main/docs/media/stepscribe-demo.mp4)** (6 MB, MP4). No more screenshots and long explanations to get an AI to understand your model; the web page and the three Claude Code commands; made for beginner designers who want AI support.
 
 ![A quick look: the web page, the result and the Claude Code commands](docs/media/stepscribe-preview.gif)
 
@@ -23,13 +23,13 @@ Then check it with `stepscribe --help`. If your shell says the command is not fo
 | I want to... | Do this |
 |---|---|
 | **Click, not type** (easiest) | Run `stepscribe ui`. A page opens in your browser at http://127.0.0.1:8765: drop a STEP file on it, watch the progress and time estimate, read the results in tabs, answer the designer questions, download a zip. Only your own computer can reach it. |
-| Use it inside **Claude Code** | Install the plugin (see below), then type `/stepscribe:export my_robot.step`. |
+| Use it inside **Claude Code** | Install the plugin (see below), then type `/stepscribe-cad:export my_robot.step`. |
 | Get files for **any AI chat** (ChatGPT, Gemini, Claude.ai...) | Run `stepscribe export my_robot.step`, then paste the `_FULL.md`, `_COMPACT.md` or `_SMALL.md` file into the chat, or upload the `chat_bundle` folder. |
 | Script it | `stepscribe pack`, `analyze`, `render`, `section` (see Quickstart). |
 
 **Things worth knowing**
 
-- Chat apps cannot take a STEP file as an attachment here. In Claude Code you give the **path**: start Claude Code in the folder that holds the file and type `/stepscribe:export my_robot.step`, or paste the full path.
+- Chat apps cannot take a STEP file as an attachment here. In Claude Code you give the **path**: start Claude Code in the folder that holds the file and type `/stepscribe-cad:export my_robot.step`, or paste the full path.
 - The result is **files on your disk**. The plugin saves them next to your STEP file in `my_robot_stepscribe/` plus a `.zip`, and tells you the full path. Open that folder in your file manager and attach the file you need to your chat. `stepscribe export` writes to `./out` unless you pass `-o`.
 - Big assemblies take minutes. The page and the plugin show progress and an estimate; nothing is cut to go faster.
 - Everything runs on your computer: no AI model, no network, no upload.
@@ -75,17 +75,17 @@ Paste a Markdown file into the chat, or upload `chat_bundle/`. `MANIFEST.md` lis
 First install the package (the plugin starts it; it does not install it): `python -m pip install "stepscribe-cad[mcp]"`. Then, in Claude Code:
 
 ```text
-/plugin marketplace add idris900323/stepscribe
-/plugin install stepscribe@stepscribe
+/plugin marketplace add idris900323/stepscribe-cad
+/plugin install stepscribe-cad@stepscribe-cad
 ```
 
-Restart Claude Code if the commands do not show up; typing `/stepscribe` lists them. Start Claude Code in the folder that holds your STEP file, then:
+Restart Claude Code if the commands do not show up; typing `/stepscribe-cad` lists them. Start Claude Code in the folder that holds your STEP file, then:
 
 | Command | What it does |
 |---|---|
-| `/stepscribe:export my_robot.step` | Analyses the file, shows progress, saves the export next to it (`my_robot_stepscribe/` and a zip) and says which file to use where. Start here. |
-| `/stepscribe:interview my_robot.step` | Asks the designer questions one at a time (answer, "skip", "not sure", "back", "done") and rebuilds the export with your answers. |
-| `/stepscribe:review my_robot.step` | A design review: summary, critical issues, important, minor, questions, what is done well, citing part IDs. |
+| `/stepscribe-cad:export my_robot.step` | Analyses the file, shows progress, saves the export next to it (`my_robot_stepscribe/` and a zip) and says which file to use where. Start here. |
+| `/stepscribe-cad:interview my_robot.step` | Asks the designer questions one at a time (answer, "skip", "not sure", "back", "done") and rebuilds the export with your answers. |
+| `/stepscribe-cad:review my_robot.step` | A design review: summary, critical issues, important, minor, questions, what is done well, citing part IDs. |
 
 The commands are independent. A good order is `export`, then `interview`, then `export` again, and `review` whenever you want the critique. You can also just ask in plain English ("what is weak in my_robot.step?"). To run the server without a prior install, change `plugins/stepscribe/.mcp.json` to `uvx --from "stepscribe-cad[mcp]" stepscribe mcp`.
 
